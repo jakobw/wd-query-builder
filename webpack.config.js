@@ -35,6 +35,10 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   },
@@ -50,7 +54,13 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 }
 
 if (process.env.NODE_ENV === 'production') {

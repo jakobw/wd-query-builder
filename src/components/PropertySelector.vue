@@ -4,15 +4,65 @@
     <button class="button is-static">Property</button>
   </p>
   <p class="control is-expanded">
-    <input class="input">
+    <div class="dropdown entity-selector">
+      <input class="input dropdown-trigger" v-model="query">
+      <div class="dropdown-menu results" v-show="results.length > 0">
+        <div class="dropdown-content">
+          <a class="dropdown-item" v-for="result in results">{{result.label}}</a>
+        </div>
+      </div>
+    </div>
   </p>
 </div>
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
+import { api } from '../api/newApi'
+import PropertySearch from '../api/PropertySearch'
+
+const propertySearch = new PropertySearch(api)
+
 export default {
+  data() {
+    return {
+      results: [],
+      query: ''
+    }
+  },
+
+  watch: {
+    query: function(term) {
+      this.getProperties(term)
+    }
+  },
+
+  methods: {
+    getProperties: debounce(function(term) {
+      if (!term) {
+        this.results = []
+        return
+      }
+
+      propertySearch.search(term)
+        .then(data => {
+          console.log(data)
+          this.results = data
+        })
+        .catch(error => {
+          console.error('api error: ' + error) // TODO: do something more sensible
+        })
+    }, 250)
+  }
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+.entity-selector {
+    width: 100%;
+
+    .dropdown-menu {
+      display: block;
+    }
+}
 </style>

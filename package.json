@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "bulma": "^0.5.3",
+    "jsonp": "^0.2.1",
+    "lodash.debounce": "^4.0.8",
+    "query-string": "^5.0.0",
     "vue": "^2.4.4"
   },
   "devDependencies": {
@@ -19,6 +22,7 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
+    "json-loader": "^0.5.7",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "vue-loader": "^13.0.5",
