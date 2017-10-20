@@ -11,7 +11,8 @@
           <a class="dropdown-item"
              v-for="result in results"
              @click="select(result)">
-             {{result.label}}
+             <p class="entity-label">{{result.label}}</p>
+             <p class="entity-description">{{result.description}}</p>
            </a>
         </div>
       </div>
@@ -54,7 +55,7 @@ export default {
           this.results = data
         })
         .catch(error => {
-          console.error('api error: ' + error) // TODO: do something more sensible
+          console.error('api error: ' + error) // TODO: show error to user
         })
     }, 250),
 
@@ -68,6 +69,7 @@ export default {
       this.query = ''
       this.results = []
       this.selected = false
+      this.$emit('unselect')
     }
   }
 }
