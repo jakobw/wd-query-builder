@@ -6,7 +6,7 @@
     <PropertyValuePair v-for="propertyValuePair in propertyValuePairs"></PropertyValuePair>
   </div>
   <button class="button add-button" @click="addNewPair">
-    + Add another property-value pair
+    + add statement
   </button>
 </div>
 </template>

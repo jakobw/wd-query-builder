@@ -5,10 +5,14 @@
   </p>
   <p class="control is-expanded">
     <div class="dropdown entity-selector">
-      <input class="input dropdown-trigger" v-model="query">
-      <div class="dropdown-menu results" v-show="results.length > 0">
+      <input class="input dropdown-trigger" v-model="query" @click="reset()">
+      <div class="dropdown-menu results" v-show="results.length > 0 && !selected">
         <div class="dropdown-content">
-          <a class="dropdown-item" v-for="result in results">{{result.label}}</a>
+          <a class="dropdown-item"
+             v-for="result in results"
+             @click="select(result)">
+             {{result.label}}
+           </a>
         </div>
       </div>
     </div>
@@ -27,6 +31,7 @@ export default {
   data() {
     return {
       results: [],
+      selected: false,
       query: ''
     }
   },
@@ -46,13 +51,24 @@ export default {
 
       propertySearch.search(term)
         .then(data => {
-          console.log(data)
           this.results = data
         })
         .catch(error => {
           console.error('api error: ' + error) // TODO: do something more sensible
         })
-    }, 250)
+    }, 250),
+
+    select(entity) {
+      this.selected = true
+      this.query = entity.label
+      this.$emit('select', entity)
+    },
+
+    reset() {
+      this.query = ''
+      this.results = []
+      this.selected = false
+    }
   }
 }
 </script>
