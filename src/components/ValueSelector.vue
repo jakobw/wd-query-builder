@@ -1,7 +1,7 @@
 <template>
 <div class="field has-addons">
   <p class="control">
-    <button class="button is-static" :disabled="visible">Value</button>
+    <a class="button is-static" :disabled="visible">Value</a>
   </p>
   <p class="control is-expanded">
     <div class="dropdown entity-selector">

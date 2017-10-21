@@ -2,33 +2,33 @@
 <div id="query-builder" class="query-builder">
   <p>Find all items matching the following statements</p>
 
-  <div class="property-value-pairs">
-    <PropertyValuePair v-for="propertyValuePair in propertyValuePairs"></PropertyValuePair>
+  <div class="statements">
+    <Statement v-for="statement in statements"></Statement>
   </div>
-  <button class="button add-button" @click="addNewPair">
+  <button class="button add-button" @click="addNewStatement">
     + add statement
   </button>
 </div>
 </template>
 
 <script>
-import PropertyValuePair from './PropertyValuePair.vue'
+import Statement from './Statement.vue'
 
 export default {
   data() {
     return {
-      propertyValuePairs: []
+      statements: []
     }
   },
 
   methods: {
-    addNewPair() {
-      this.propertyValuePairs.push({})
+    addNewStatement() {
+      this.statements.push({})
     }
   },
 
   components: {
-    PropertyValuePair
+    Statement
   }
 }
 </script>
@@ -38,7 +38,7 @@ export default {
   margin-top: 20px
 }
 
-.property-value-pairs {
+.statements {
   margin-top: 20px
 }
 .add-button {

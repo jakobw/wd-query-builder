@@ -1,7 +1,7 @@
 <template>
 <div class="field has-addons">
   <p class="control">
-    <button class="button is-static">Property</button>
+    <a class="button is-static">Property</a>
   </p>
   <p class="control is-expanded">
     <div class="dropdown entity-selector">

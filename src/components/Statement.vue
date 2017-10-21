@@ -1,5 +1,5 @@
 <template>
-<div class="property-value-pair">
+<div class="statement">
   <div class="columns">
     <div class="column">
       <PropertySelector v-on:select="showValueSelectorForProperty" ref="property"></PropertySelector>
