@@ -5,6 +5,8 @@
   </div>
 
   <div class="container">
+    <p>Find all items matching the following statements</p>
+
     <QueryBuilder></QueryBuilder>
   </div>
 </section>

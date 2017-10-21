@@ -2,13 +2,19 @@
 <div class="statement">
   <div class="columns">
     <div class="column">
-      <PropertySelector v-on:select="showValueSelectorForProperty" ref="property"></PropertySelector>
+      <PropertySelector v-on:select="selectProperty" ref="property"></PropertySelector>
     </div>
     <div class="column">
-      <ValueSelector :visible="valueSelectorDisabled" ref="value"></ValueSelector>
+      <ValueSelector v-on:select="selectValue" :visible="valueSelectorDisabled" ref="value"></ValueSelector>
     </div>
     <div class="column is-narrow">
       <button class="button">&times;</button>
+    </div>
+  </div>
+
+  <div class="columns" v-if="hasItemFilter">
+    <div class="column is-offset-2 is-10">
+      <ItemsFilter></ItemsFilter>
     </div>
   </div>
 </div>
@@ -18,24 +24,35 @@
 import Vue from 'vue'
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
+import QueryBuilder from './QueryBuilder.vue'
 
 export default {
   data() {
     return {
-      valueSelectorDisabled: true
+      valueSelectorDisabled: true,
+      hasItemFilter: false
     }
   },
 
   methods: {
-    showValueSelectorForProperty(property) {
+    selectProperty(property) {
       this.valueSelectorDisabled = false
       Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus()) // TODO: find better way to do this
+    },
+
+    selectValue(value) {
+      if (value === 'any item matching...') {
+        this.hasItemFilter = true
+      } else {
+        this.hasItemFilter = false
+      }
     }
   },
 
   components: {
     PropertySelector,
-    ValueSelector
+    ValueSelector,
+    'ItemsFilter': QueryBuilder // TODO: not so happy with ItemsFilter as a name
   }
 }
 </script>

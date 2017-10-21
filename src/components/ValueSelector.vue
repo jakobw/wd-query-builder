@@ -107,10 +107,12 @@ export default {
 
     selectSpecialValue(value) {
       this.query = value
+      this.$emit('select', value)
     },
 
     selectItem(item) {
       this.query = item.label
+      this.$emit('select', item)
     },
 
     focus() {

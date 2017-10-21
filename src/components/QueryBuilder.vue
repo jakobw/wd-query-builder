@@ -1,7 +1,5 @@
 <template>
-<div id="query-builder" class="query-builder">
-  <p>Find all items matching the following statements</p>
-
+<div class="query-builder">
   <div class="statements">
     <Statement v-for="statement in statements"></Statement>
   </div>
