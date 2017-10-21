@@ -13,7 +13,7 @@
   </div>
 
   <div class="columns" v-if="hasItemFilter">
-    <div class="column is-offset-2 is-10">
+    <div class="column is-offset-1 is-11">
       <QueryBuilder></QueryBuilder>
     </div>
   </div>

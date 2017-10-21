@@ -3,7 +3,7 @@
   <div class="statements">
     <Statement v-for="statement in statements"></Statement>
   </div>
-  <button class="button add-button" @click="addNewStatement">
+  <button class="button add-button" @click="addStatement">
     + add statement
   </button>
 </div>
@@ -13,14 +13,18 @@
 import Statement from './Statement.vue'
 
 export default {
+  mounted() {
+    this.$el.querySelector('input').focus()
+  },
+
   data() {
     return {
-      statements: []
+      statements: [{}] // TODO: make statement component hold statement models
     }
   },
 
   methods: {
-    addNewStatement() {
+    addStatement() {
       this.statements.push({})
     }
   },
