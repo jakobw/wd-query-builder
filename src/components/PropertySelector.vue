@@ -12,7 +12,7 @@
              @keydown.enter="dropdownConfirm"
              @keydown.up="dropdownUp($event)"
              @keydown.down="dropdownDown($event)">
-      <div class="dropdown-menu results" v-show="hasFocus">
+      <div class="dropdown-menu results" v-show="hasFocus && query">
         <div class="dropdown-content">
           <a class="dropdown-item"
              v-for="(result, index) in results"
