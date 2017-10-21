@@ -5,12 +5,20 @@
   </p>
   <p class="control is-expanded">
     <div class="dropdown entity-selector">
-      <input class="input dropdown-trigger" v-model="query" @click="reset()">
-      <div class="dropdown-menu results" v-show="results.length > 0 && !selected">
+      <input class="input dropdown-trigger"
+             v-model="query"
+             @focus="focus"
+             @blur="unfocus"
+             @keydown.enter="dropdownConfirm"
+             @keydown.up="dropdownUp($event)"
+             @keydown.down="dropdownDown($event)">
+      <div class="dropdown-menu results" v-show="hasFocus">
         <div class="dropdown-content">
           <a class="dropdown-item"
-             v-for="result in results"
-             @click="select(result)">
+             v-for="(result, index) in results"
+             @click="select(result)"
+             @mouseover="dropdownSelect(index)"
+             :class="{ 'is-active': index === selected }">
              <p class="entity-label">{{result.label}}</p>
              <p class="entity-description">{{result.description}}</p>
            </a>
@@ -32,7 +40,8 @@ export default {
   data() {
     return {
       results: [],
-      selected: false,
+      selected: 0,
+      hasFocus: false,
       query: ''
     }
   },
@@ -60,16 +69,38 @@ export default {
     }, 250),
 
     select(entity) {
-      this.selected = true
       this.query = entity.label
       this.$emit('select', entity)
     },
 
-    reset() {
-      this.query = ''
-      this.results = []
-      this.selected = false
-      this.$emit('unselect')
+    dropdownUp(event) {
+      event.preventDefault()
+      this.dropdownSelect(Math.max(0, this.selected - 1))
+    },
+
+    dropdownDown(event) {
+      event.preventDefault()
+      this.dropdownSelect(Math.min(
+        this.results.length - 1,
+        this.selected + 1
+      ))
+    },
+
+    dropdownSelect(index) {
+      this.selected = index
+    },
+
+    dropdownConfirm() {
+      this.select(this.results[this.selected])
+    },
+
+    focus() {
+      this.hasFocus = true
+    },
+
+    unfocus() {
+      this.hasFocus = false
+      this.selected = 0
     }
   }
 }

@@ -2,9 +2,7 @@
 <div class="property-value-pair">
   <div class="columns">
     <div class="column">
-      <PropertySelector v-on:select="showValueSelectorForProperty"
-                        v-on:unselect="hideValueSelector">
-      </PropertySelector>
+      <PropertySelector v-on:select="showValueSelectorForProperty"></PropertySelector>
     </div>
     <div class="column">
       <ValueSelector :visible="valueSelectorDisabled"></ValueSelector>
@@ -30,10 +28,6 @@ export default {
   methods: {
     showValueSelectorForProperty(property) {
       this.valueSelectorDisabled = false
-    },
-
-    hideValueSelector() {
-      this.valueSelectorDisabled = true
     }
   },
 
