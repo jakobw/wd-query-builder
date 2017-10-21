@@ -2,10 +2,10 @@
 <div class="property-value-pair">
   <div class="columns">
     <div class="column">
-      <PropertySelector v-on:select="showValueSelectorForProperty"></PropertySelector>
+      <PropertySelector v-on:select="showValueSelectorForProperty" ref="property"></PropertySelector>
     </div>
     <div class="column">
-      <ValueSelector :visible="valueSelectorDisabled"></ValueSelector>
+      <ValueSelector :visible="valueSelectorDisabled" ref="value"></ValueSelector>
     </div>
     <div class="column is-narrow">
       <button class="button">&times;</button>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
 
@@ -28,6 +29,7 @@ export default {
   methods: {
     showValueSelectorForProperty(property) {
       this.valueSelectorDisabled = false
+      Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus()) // TODO: find better way to do this
     }
   },
 
