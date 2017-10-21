@@ -31,6 +31,10 @@
              <p class="entity-label">{{result.label}}</p>
              <p class="entity-description">{{result.description}}</p>
            </a>
+
+           <i class="dropdown-item" v-if="!results.length && !filteredSpecialValues.length">
+             No items found. Try searching for a different keyword.
+           </i>
         </div>
       </div>
     </div>
