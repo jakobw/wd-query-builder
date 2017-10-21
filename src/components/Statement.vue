@@ -14,7 +14,7 @@
 
   <div class="columns" v-if="hasItemFilter">
     <div class="column is-offset-2 is-10">
-      <ItemsFilter></ItemsFilter>
+      <QueryBuilder></QueryBuilder>
     </div>
   </div>
 </div>
@@ -24,7 +24,6 @@
 import Vue from 'vue'
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
-import QueryBuilder from './QueryBuilder.vue'
 
 export default {
   data() {
@@ -49,10 +48,13 @@ export default {
     }
   },
 
+  beforeCreate() {
+    this.$options.components.QueryBuilder = require('./QueryBuilder.vue').default
+  },
+
   components: {
     PropertySelector,
-    ValueSelector,
-    'ItemsFilter': QueryBuilder // TODO: not so happy with ItemsFilter as a name
+    ValueSelector
   }
 }
 </script>
