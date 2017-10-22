@@ -17,6 +17,17 @@
       <QueryBuilder></QueryBuilder>
     </div>
   </div>
+
+  <div class="qualifiers" v-if="qualifiers.length > 0">
+    <h5 class="title is-5">Qualifiers</h5>
+
+    <Qualifier v-for="(qualifier, index) in qualifiers"
+               :key="qualifier.id"
+               v-on:remove="qualifiers.splice(index, 1)">
+    </Qualifier>
+  </div>
+
+  <a class="button is-small" @click="addQualifier">+ add qualifier</a>
 </div>
 </template>
 
@@ -24,12 +35,15 @@
 import Vue from 'vue'
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
+import Qualifier from './Qualifier.vue'
 
 export default {
   data() {
     return {
       valueSelectorDisabled: true,
-      hasItemFilter: false
+      hasItemFilter: false,
+      qualifiers: [],
+      nextQualifierId: 0
     }
   },
 
@@ -40,21 +54,28 @@ export default {
     },
 
     selectValue(value) {
-      if (value === 'any item matching...') {
+      if (value === 'any item matching...') { // TODO: do not use a string literal
         this.hasItemFilter = true
       } else {
         this.hasItemFilter = false
       }
+    },
+
+    addQualifier() {
+      this.qualifiers.push({ id: this.nextQualifierId })
+      this.nextQualifierId++
     }
   },
 
   beforeCreate() {
+    // preventing cyclic dependency
     this.$options.components.QueryBuilder = require('./QueryBuilder.vue').default
   },
 
   components: {
     PropertySelector,
-    ValueSelector
+    ValueSelector,
+    Qualifier
   }
 }
 </script>
