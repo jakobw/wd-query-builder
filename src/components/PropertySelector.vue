@@ -103,8 +103,10 @@ export default {
     },
 
     unfocus() {
-      this.hasFocus = false
-      this.selected = 0
+      setTimeout(() => { // avoids a strange race condition between blur and click
+        this.hasFocus = false
+        this.selected = 0
+      }, 100)
     }
   }
 }
