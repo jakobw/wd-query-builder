@@ -8,7 +8,7 @@
       <ValueSelector v-on:select="selectValue" :visible="valueSelectorDisabled" ref="value"></ValueSelector>
     </div>
     <div class="column is-narrow">
-      <button class="button">&times;</button>
+      <a class="button" @click="$emit('remove')">&times;</a>
     </div>
   </div>
 

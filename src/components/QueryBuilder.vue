@@ -1,7 +1,10 @@
 <template>
 <div class="query-builder">
   <div class="statements">
-    <Statement v-for="statement in statements"></Statement>
+    <Statement v-for="(statement, index) in statements"
+               :key="statement.id"
+               v-on:remove="statements.splice(index, 1)">
+    </Statement>
   </div>
   <button class="button add-button" @click="addStatement">
     + add statement
@@ -13,19 +16,25 @@
 import Statement from './Statement.vue'
 
 export default {
+  created() {
+    this.addStatement()
+  },
+
   mounted() {
     this.$el.querySelector('input').focus()
   },
 
   data() {
     return {
-      statements: [{}] // TODO: make statement component hold statement models
+      nextId: 0,
+      statements: []
     }
   },
 
   methods: {
     addStatement() {
-      this.statements.push({})
+      this.statements.push({ id: this.nextId }) // TODO: make statement component hold statement objects
+      this.nextId++
     }
   },
 
