@@ -1,7 +1,5 @@
 # Wikidata Query Builder
 
-> Wikidata Query Builder
-
 ## Build Setup
 
 ``` bash
