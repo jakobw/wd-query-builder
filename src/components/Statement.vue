@@ -14,7 +14,7 @@
 
   <div class="columns" v-if="hasItemFilter">
     <div class="column is-offset-1 is-11">
-      <StatementList></StatementList>
+      <StatementList :subject="subject + '-s-' + this.statement.getId()"></StatementList>
     </div>
   </div>
 
@@ -38,6 +38,8 @@ import ValueSelector from './ValueSelector.vue'
 import Qualifier from './Qualifier.vue'
 
 export default {
+  props: ['statement', 'subject'],
+
   data() {
     return {
       valueSelectorDisabled: true,
@@ -50,7 +52,8 @@ export default {
   methods: {
     selectProperty(property) {
       this.valueSelectorDisabled = false
-      Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus()) // TODO: find better way to do this
+      // TODO: find better way than nextTick
+      Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus())
     },
 
     selectValue(value) {

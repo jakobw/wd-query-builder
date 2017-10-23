@@ -6,7 +6,7 @@
   </div>
 
   <div class="container">
-    <StatementList></StatementList>
+    <StatementList subject="root"></StatementList>
   </div>
 
   <div class="container">
@@ -16,10 +16,13 @@
 </template>
 
 <script>
+import { store } from './store'
 import StatementList from './components/StatementList.vue'
 import QueryResults from './components/QueryResults.vue'
 
 export default {
+  store,
+
   components: {
     StatementList,
     QueryResults

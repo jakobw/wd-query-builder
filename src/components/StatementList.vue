@@ -2,7 +2,9 @@
 <div class="statement-list">
   <div class="statements">
     <Statement v-for="(statement, index) in statements"
-               :key="statement.id"
+               :key="statement.getId()"
+               :subject="subject"
+               :statement="statement"
                v-on:remove="statements.splice(index, 1)">
     </Statement>
   </div>
@@ -13,9 +15,12 @@
 </template>
 
 <script>
-import Statement from './Statement.vue'
+import StatementComponent from './Statement.vue'
+import Statement from '../wikidata/Statement'
 
 export default {
+  props: ['subject'],
+
   created() {
     this.addStatement()
   },
@@ -26,20 +31,29 @@ export default {
 
   data() {
     return {
-      nextId: 0,
-      statements: []
+      nextId: 0
     }
   },
 
   methods: {
     addStatement() {
-      this.statements.push({ id: this.nextId }) // TODO: make statement component hold statement objects
+      this.$store.commit({
+        type: 'addStatement',
+        subject: this.subject,
+        statement: new Statement(this.nextId)
+      })
       this.nextId++
+    },
+  },
+
+  computed: {
+    statements() {
+      return this.$store.state.triples[this.subject]
     }
   },
 
   components: {
-    Statement
+    Statement: StatementComponent
   }
 }
 </script>
