@@ -6,7 +6,7 @@
   </div>
 
   <div class="container">
-    <QueryBuilder></QueryBuilder>
+    <StatementList></StatementList>
   </div>
 
   <div class="container">
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import QueryBuilder from './components/QueryBuilder.vue'
+import StatementList from './components/StatementList.vue'
 import QueryResults from './components/QueryResults.vue'
 
 export default {
   components: {
-    QueryBuilder,
+    StatementList,
     QueryResults
   }
 }

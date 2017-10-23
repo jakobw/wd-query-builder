@@ -1,5 +1,5 @@
 <template>
-<div class="query-builder">
+<div class="statement-list">
   <div class="statements">
     <Statement v-for="(statement, index) in statements"
                :key="statement.id"

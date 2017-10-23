@@ -14,7 +14,7 @@
 
   <div class="columns" v-if="hasItemFilter">
     <div class="column is-offset-1 is-11">
-      <QueryBuilder></QueryBuilder>
+      <StatementList></StatementList>
     </div>
   </div>
 
@@ -69,7 +69,7 @@ export default {
 
   beforeCreate() {
     // preventing cyclic dependency
-    this.$options.components.QueryBuilder = require('./QueryBuilder.vue').default
+    this.$options.components.StatementList = require('./StatementList.vue').default
   },
 
   components: {
@@ -84,6 +84,10 @@ export default {
 @import '../style/main.scss';
 
 .statement {
+  &:first-child {
+    margin-top: 0;
+  }
+
   padding: 10px;
   border: 1px solid darken($light, 10%);
   background: $white;
