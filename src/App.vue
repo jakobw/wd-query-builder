@@ -8,15 +8,21 @@
   <div class="container">
     <QueryBuilder></QueryBuilder>
   </div>
+
+  <div class="container">
+    <QueryResults></QueryResults>
+  </div>
 </section>
 </template>
 
 <script>
 import QueryBuilder from './components/QueryBuilder.vue'
+import QueryResults from './components/QueryResults.vue'
 
 export default {
   components: {
-    QueryBuilder
+    QueryBuilder,
+    QueryResults
   }
 }
 </script>
