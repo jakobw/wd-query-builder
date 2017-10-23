@@ -45,13 +45,6 @@ export default {
 </script>
 
 <style lang="scss">
-.query-builder {
-  margin-top: 20px
-}
-
-.statements {
-  margin-top: 20px
-}
 .add-button {
   margin-top: 20px
 }

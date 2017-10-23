@@ -27,7 +27,7 @@
     </Qualifier>
   </div>
 
-  <a class="button is-small" @click="addQualifier">+ add qualifier</a>
+  <a class="add-qualifier button is-small" @click="addQualifier">+ add qualifier</a>
 </div>
 </template>
 
@@ -81,4 +81,16 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../style/main.scss';
+
+.statement {
+  padding: 10px;
+  border: 1px solid darken($light, 10%);
+  background: $white;
+  margin-top: 20px;
+
+  .add-qualifier {
+    margin-top: 10px;
+  }
+}
 </style>

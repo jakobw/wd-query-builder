@@ -1,0 +1,18 @@
+@import 'colors';
+@import '~bulma/bulma';
+
+// TODO: import Lato and Charter fonts
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  font-family: 'Lato', $family-sans-serif;
+  background: $light;
+}
+
+.title {
+  font-family: 'Charter', 'Linux Libertine', 'Georgia', 'Times', serif;
+}

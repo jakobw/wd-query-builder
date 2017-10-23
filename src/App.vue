@@ -1,12 +1,11 @@
 <template>
 <section class="section">
-  <div class="container">
-    <h1 class="title">Wikidata Query Builder</h1>
+  <div class="container header">
+    <h1 class="title is-1">Wikidata Query Builder</h1>
+    <p class="subtitle is-4">Find items by describing their statements</p>
   </div>
 
   <div class="container">
-    <p>Find all items matching the following statements</p>
-
     <QueryBuilder></QueryBuilder>
   </div>
 </section>
@@ -23,5 +22,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~bulma/bulma'
+@import 'style/main.scss';
+
+.container.header {
+  margin-bottom: 20px;
+}
 </style>
