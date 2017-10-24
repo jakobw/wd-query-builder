@@ -46,6 +46,7 @@
 import debounce from 'lodash.debounce'
 import { api } from '../api/newApi'
 import ItemSearch from '../api/ItemSearch'
+import ItemValue from '../queryBuilder/ItemValue'
 import specialValues from '../queryBuilder/specialValues'
 
 const itemSearch = new ItemSearch(api)
@@ -117,7 +118,7 @@ export default {
 
     selectItem(item) {
       this.query = item.label
-      this.$emit('select', item)
+      this.$emit('select', new ItemValue(item))
     },
 
     focus() {

@@ -37,6 +37,7 @@
 import debounce from 'lodash.debounce'
 import { api } from '../api/newApi'
 import PropertySearch from '../api/PropertySearch'
+import Property from '../queryBuilder/Property'
 
 const propertySearch = new PropertySearch(api)
 
@@ -74,7 +75,7 @@ export default {
 
     select(entity) {
       this.query = entity.label
-      this.$emit('select', entity)
+      this.$emit('select', new Property(entity))
     },
 
     dropdownUp(event) {
