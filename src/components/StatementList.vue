@@ -1,11 +1,11 @@
 <template>
 <div class="statement-list">
   <div class="statements">
-    <Statement v-for="(statement, index) in statements"
+    <Statement v-for="statement in statements"
                :key="statement.getId()"
                :subject="subject"
                :statement="statement"
-               v-on:remove="statements.splice(index, 1)">
+               v-on:remove="removeStatement(statement)">
     </Statement>
   </div>
   <button class="button add-button" @click="addStatement">
@@ -44,6 +44,14 @@ export default {
       })
       this.nextId++
     },
+
+    removeStatement(statement) {
+      this.$store.commit({
+        type: 'removeStatement',
+        subject: this.subject,
+        statement
+      })
+    }
   },
 
   computed: {

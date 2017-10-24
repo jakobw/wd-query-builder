@@ -19,6 +19,10 @@ export const store = new Vuex.Store({
       }
 
       Vue.set(state.triples[payload.subject], payload.statement.getId(), payload.statement)
+    },
+
+    removeStatement(state, payload) {
+      Vue.delete(state.triples[payload.subject], payload.statement.getId())
     }
   }
 })
