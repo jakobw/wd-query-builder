@@ -46,6 +46,7 @@
 import debounce from 'lodash.debounce'
 import { api } from '../api/newApi'
 import ItemSearch from '../api/ItemSearch'
+import specialValues from '../queryBuilder/specialValues'
 
 const itemSearch = new ItemSearch(api)
 
@@ -54,7 +55,7 @@ export default {
 
   data() {
     return {
-      specialValues: ['any item', 'any item matching...', 'statement does not exist'],
+      specialValues: Object.values(specialValues),
       results: [],
       hasFocus: false,
       query: '',

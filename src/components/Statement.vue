@@ -39,6 +39,7 @@ import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
 import QualifierComponent from './Qualifier.vue'
 import Qualifier from '../wikidata/Qualifier'
+import specialValues from '../queryBuilder/specialValues'
 
 export default {
   props: ['statement', 'subject'],
@@ -66,7 +67,7 @@ export default {
     },
 
     selectValue(value) {
-      if (value === 'any item matching...') { // TODO: do not use a string literal
+      if (value === specialValues.ANY_MATCHING) {
         this.hasItemFilter = true
       } else {
         this.hasItemFilter = false

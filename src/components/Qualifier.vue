@@ -25,6 +25,7 @@ import Vue from 'vue'
 
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
+import specialValues from '../queryBuilder/specialValues'
 
 export default {
   props: ['qualifier', 'subject'],
@@ -50,7 +51,7 @@ export default {
     },
 
     selectValue(value) {
-      if (value === 'any item matching...') { // TODO: do not use a string literal
+      if (value === specialValues.ANY_MATCHING) {
         this.hasItemFilter = true
       } else {
         this.hasItemFilter = false
