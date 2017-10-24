@@ -36,6 +36,14 @@ export const store = new Vuex.Store({
 
     removeQualifier(state, payload) {
       Vue.delete(state.qualifierTriples[payload.subject], payload.qualifier.getId())
+    },
+
+    setStatementProperty(state, payload) {
+      state.statementTriples[payload.subject][payload.id].setProperty(payload.property)
+    },
+
+    setStatementValue(state, payload) {
+      state.statementTriples[payload.subject][payload.id].setValue(payload.value)
     }
   }
 })

@@ -54,6 +54,13 @@ export default {
       this.valueSelectorDisabled = false
       // TODO: find better way than nextTick
       Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus())
+
+      this.$store.commit({
+        type: 'setStatementProperty',
+        subject: this.subject,
+        id: this.statement.getId(),
+        property
+      })
     },
 
     selectValue(value) {
@@ -62,6 +69,13 @@ export default {
       } else {
         this.hasItemFilter = false
       }
+
+      this.$store.commit({
+        type: 'setStatementValue',
+        subject: this.subject,
+        id: this.statement.getId(),
+        value
+      })
     },
 
     addQualifier() {
