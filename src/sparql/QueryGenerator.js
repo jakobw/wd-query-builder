@@ -24,7 +24,7 @@ export default class QueryGenerator {
         const statement = this.statementTriples[subject][statementId]
 
         if (statement.getProperty() && statement.getValue()) {
-          const statementVariable = this.statementVariable(subject)
+          const statementVariable = this.statementVariable(statement.getId())
 
           query.addTriple(
             `?${subject}`,
