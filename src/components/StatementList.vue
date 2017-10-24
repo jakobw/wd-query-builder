@@ -56,7 +56,7 @@ export default {
 
   computed: {
     statements() {
-      return this.$store.state.triples[this.subject]
+      return this.$store.state.statementTriples[this.subject]
     }
   },
 

@@ -14,16 +14,16 @@
 
   <div class="columns" v-if="hasItemFilter">
     <div class="column is-offset-1 is-11">
-      <StatementList :subject="subject + '-s-' + this.statement.getId()"></StatementList>
+      <StatementList :subject="statementPath"></StatementList>
     </div>
   </div>
 
-  <div class="qualifiers" v-if="qualifiers.length > 0">
+  <div class="qualifiers" v-if="Object.keys(qualifiers).length > 0">
     <h5 class="title is-5">Qualifiers</h5>
 
-    <Qualifier v-for="(qualifier, index) in qualifiers"
-               :key="qualifier.id"
-               v-on:remove="qualifiers.splice(index, 1)">
+    <Qualifier v-for="qualifier in qualifiers"
+               :key="qualifier.getId()"
+               v-on:remove="removeQualifier(qualifier)">
     </Qualifier>
   </div>
 
@@ -35,7 +35,8 @@
 import Vue from 'vue'
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
-import Qualifier from './Qualifier.vue'
+import QualifierComponent from './Qualifier.vue'
+import Qualifier from '../wikidata/Qualifier'
 
 export default {
   props: ['statement', 'subject'],
@@ -44,7 +45,6 @@ export default {
     return {
       valueSelectorDisabled: true,
       hasItemFilter: false,
-      qualifiers: [],
       nextQualifierId: 0
     }
   },
@@ -65,8 +65,30 @@ export default {
     },
 
     addQualifier() {
-      this.qualifiers.push({ id: this.nextQualifierId })
+      this.$store.commit({
+        type: 'addQualifier',
+        subject: this.statementPath,
+        qualifier: new Qualifier(this.nextQualifierId)
+      })
       this.nextQualifierId++
+    },
+
+    removeQualifier(qualifier) {
+      this.$store.commit({
+        type: 'removeQualifier',
+        subject: this.statementPath,
+        qualifier
+      })
+    }
+  },
+
+  computed: {
+    statementPath() {
+      return this.subject + '-s-' + this.statement.getId()
+    },
+
+    qualifiers() {
+      return this.$store.state.qualifierTriples[this.statementPath] || {}
     }
   },
 
@@ -78,7 +100,7 @@ export default {
   components: {
     PropertySelector,
     ValueSelector,
-    Qualifier
+    Qualifier: QualifierComponent
   }
 }
 </script>

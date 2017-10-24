@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    triples: {}
+    statementTriples: {},
+    qualifierTriples: {}
   },
 
   actions: {
@@ -14,15 +15,27 @@ export const store = new Vuex.Store({
 
   mutations: {
     addStatement(state, payload) {
-      if (!state.triples[payload.subject]) {
-        Vue.set(state.triples, payload.subject, {})
+      if (!state.statementTriples[payload.subject]) {
+        Vue.set(state.statementTriples, payload.subject, {})
       }
 
-      Vue.set(state.triples[payload.subject], payload.statement.getId(), payload.statement)
+      Vue.set(state.statementTriples[payload.subject], payload.statement.getId(), payload.statement)
     },
 
     removeStatement(state, payload) {
-      Vue.delete(state.triples[payload.subject], payload.statement.getId())
+      Vue.delete(state.statementTriples[payload.subject], payload.statement.getId())
+    },
+
+    addQualifier(state, payload) {
+      if (!state.qualifierTriples[payload.subject]) {
+        Vue.set(state.qualifierTriples, payload.subject, {})
+      }
+
+      Vue.set(state.qualifierTriples[payload.subject], payload.qualifier.getId(), payload.qualifier)
+    },
+
+    removeQualifier(state, payload) {
+      Vue.delete(state.qualifierTriples[payload.subject], payload.qualifier.getId())
     }
   }
 })
