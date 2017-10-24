@@ -6,7 +6,7 @@
   </div>
 
   <div class="container">
-    <StatementList subject="root"></StatementList>
+    <StatementList subject="item"></StatementList>
   </div>
 
   <div class="container">
