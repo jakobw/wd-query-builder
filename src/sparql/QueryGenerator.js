@@ -23,14 +23,26 @@ export default class QueryGenerator {
         const statement = this.statementTriples[subject][statementId]
 
         if (statement.getProperty() && statement.getValue()) {
+          const statementVariable = this.statementVariable(subject)
+
           query.addTriple(
             `?${subject}`,
-            statement.getProperty().getValuePredicate(),
+            statement.getProperty().getStatementPredicate(),
+            statementVariable
+          )
+
+          query.addTriple(
+            statementVariable,
+            statement.getProperty().getStatementValuePredicate(),
             statement.getValue().getObject()
           )
         }
       }
     }
+  }
+
+  statementVariable(name) {
+    return `?${name}Statement`
   }
 
   addVariables(query) {
