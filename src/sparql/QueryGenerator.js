@@ -11,6 +11,7 @@ export default class QueryGenerator {
 
     this.addVariables(query)
     this.addStatementTriples(query)
+    this.addQualifierTriples(query)
 
     query.addService('SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }')
 
@@ -37,6 +38,21 @@ export default class QueryGenerator {
             statement.getValue().getObject()
           )
         }
+      }
+    }
+  }
+
+  addQualifierTriples(query) {
+    for (const subject in this.qualifierTriples) {
+      for (const qualifierId in this.qualifierTriples[subject]) {
+        const qualifier = this.qualifierTriples[subject][qualifierId]
+        const statement = this.statementVariable(subject)
+
+        query.addTriple(
+          statement,
+          qualifier.getProperty().getQualifierPredicate(),
+          qualifier.getValue().getObject()
+        )
       }
     }
   }
