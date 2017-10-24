@@ -48,11 +48,12 @@ import { api } from '../api/newApi'
 import ItemSearch from '../api/ItemSearch'
 import ItemValue from '../queryBuilder/ItemValue'
 import specialValues from '../queryBuilder/specialValues'
+import AnyMatchingValue from '../queryBuilder/AnyMatchingValue'
 
 const itemSearch = new ItemSearch(api)
 
 export default {
-  props: ['visible'],
+  props: ['visible', 'statementPath'],
 
   data() {
     return {
@@ -113,6 +114,12 @@ export default {
 
     selectSpecialValue(value) {
       this.query = value
+
+      if (value === specialValues.ANY_MATCHING) {
+        // TODO: use a factory for all special values
+        // TODO: value selector should not need to know statement path; statement should handle special values?
+        value = new AnyMatchingValue(this.statementPath)
+      }
       this.$emit('select', value)
     },
 

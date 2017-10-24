@@ -10,6 +10,8 @@
   </div>
 
   <div class="container">
+    <hr>
+
     <QueryResults></QueryResults>
   </div>
 </section>

@@ -51,7 +51,7 @@ export default {
     },
 
     selectValue(value) {
-      if (value === specialValues.ANY_MATCHING) {
+      if (value.getObject().indexOf('?') === 0) { // FIXME: silly
         this.hasItemFilter = true
       } else {
         this.hasItemFilter = false
@@ -68,7 +68,7 @@ export default {
 
   computed: {
     qualifierPath() {
-      return this.subject + '-q-' + this.qualifier.getId()
+      return this.subject + '_q_' + this.qualifier.getId()
     }
   },
 

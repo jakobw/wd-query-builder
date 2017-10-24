@@ -5,7 +5,11 @@
       <PropertySelector v-on:select="selectProperty" ref="property"></PropertySelector>
     </div>
     <div class="column">
-      <ValueSelector v-on:select="selectValue" :visible="valueSelectorDisabled" ref="value"></ValueSelector>
+      <ValueSelector v-on:select="selectValue"
+                     :visible="valueSelectorDisabled"
+                     :statementPath="statementPath"
+                     ref="value">
+      </ValueSelector>
     </div>
     <div class="column is-narrow">
       <a class="button" @click="$emit('remove')">&times;</a>
@@ -67,7 +71,7 @@ export default {
     },
 
     selectValue(value) {
-      if (value === specialValues.ANY_MATCHING) {
+      if (value.getObject().indexOf('?') === 0) { // FIXME: silly
         this.hasItemFilter = true
       } else {
         this.hasItemFilter = false
@@ -101,7 +105,7 @@ export default {
 
   computed: {
     statementPath() {
-      return this.subject + '-s-' + this.statement.getId()
+      return this.subject + '_s_' + this.statement.getId()
     },
 
     qualifiers() {
