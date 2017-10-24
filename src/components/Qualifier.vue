@@ -14,7 +14,7 @@
 
     <div class="columns" v-if="hasItemFilter">
       <div class="column is-offset-1 is-11">
-        <StatementList></StatementList>
+        <StatementList :subject="qualifierPath"></StatementList>
       </div>
     </div>
   </div>
@@ -27,6 +27,8 @@ import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
 
 export default {
+  props: ['qualifier', 'subject'],
+
   data() {
     return {
       valueSelectorDisabled: true,
@@ -35,9 +37,16 @@ export default {
   },
 
   methods: {
-    selectProperty() {
+    selectProperty(property) {
       this.valueSelectorDisabled = false
       Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus()) // TODO: find better way to do this
+
+      this.$store.commit({
+        type: 'setQualifierProperty',
+        subject: this.subject,
+        id: this.qualifier.getId(),
+        property
+      })
     },
 
     selectValue(value) {
@@ -46,6 +55,19 @@ export default {
       } else {
         this.hasItemFilter = false
       }
+
+      this.$store.commit({
+        type: 'setQualifierValue',
+        subject: this.subject,
+        id: this.qualifier.getId(),
+        value
+      })
+    }
+  },
+
+  computed: {
+    qualifierPath() {
+      return this.subject + '-q-' + this.qualifier.getId()
     }
   },
 

@@ -44,6 +44,14 @@ export const store = new Vuex.Store({
 
     setStatementValue(state, payload) {
       state.statementTriples[payload.subject][payload.id].setValue(payload.value)
+    },
+
+    setQualifierProperty(state, payload) {
+      state.qualifierTriples[payload.subject][payload.id].setProperty(payload.property)
+    },
+
+    setQualifierValue(state, payload) {
+      state.qualifierTriples[payload.subject][payload.id].setValue(payload.value)
     }
   }
 })

@@ -23,6 +23,8 @@
 
     <Qualifier v-for="qualifier in qualifiers"
                :key="qualifier.getId()"
+               :qualifier="qualifier"
+               :subject="statementPath"
                v-on:remove="removeQualifier(qualifier)">
     </Qualifier>
   </div>
