@@ -40,7 +40,7 @@ export default {
       this.$store.commit({
         type: 'addStatement',
         subject: this.subject,
-        statement: new Statement(this.nextId)
+        statement: new Statement(this.subject + '_s_' + this.nextId)
       })
       this.nextId++
     },

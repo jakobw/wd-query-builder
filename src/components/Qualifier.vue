@@ -14,7 +14,7 @@
 
     <div class="columns" v-if="hasItemFilter">
       <div class="column is-offset-1 is-11">
-        <StatementList :subject="qualifierPath"></StatementList>
+        <StatementList :subject="qualifier.getId()"></StatementList>
       </div>
     </div>
   </div>
@@ -63,12 +63,6 @@ export default {
         id: this.qualifier.getId(),
         value
       })
-    }
-  },
-
-  computed: {
-    qualifierPath() {
-      return this.subject + '_q_' + this.qualifier.getId()
     }
   },
 

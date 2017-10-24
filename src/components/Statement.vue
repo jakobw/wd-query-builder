@@ -7,7 +7,7 @@
     <div class="column">
       <ValueSelector v-on:select="selectValue"
                      :visible="valueSelectorDisabled"
-                     :statementPath="statementPath"
+                     :statementPath="statement.getId()"
                      ref="value">
       </ValueSelector>
     </div>
@@ -18,7 +18,7 @@
 
   <div class="columns" v-if="hasItemFilter">
     <div class="column is-offset-1 is-11">
-      <StatementList :subject="statementPath"></StatementList>
+      <StatementList :subject="statement.getId()"></StatementList>
     </div>
   </div>
 
@@ -28,7 +28,7 @@
     <Qualifier v-for="qualifier in qualifiers"
                :key="qualifier.getId()"
                :qualifier="qualifier"
-               :subject="statementPath"
+               :subject="statement.getId()"
                v-on:remove="removeQualifier(qualifier)">
     </Qualifier>
   </div>
@@ -88,8 +88,8 @@ export default {
     addQualifier() {
       this.$store.commit({
         type: 'addQualifier',
-        subject: this.statementPath,
-        qualifier: new Qualifier(this.nextQualifierId)
+        subject: this.statement.getId(),
+        qualifier: new Qualifier(this.subject + '_q_' + this.nextQualifierId)
       })
       this.nextQualifierId++
     },
@@ -97,19 +97,15 @@ export default {
     removeQualifier(qualifier) {
       this.$store.commit({
         type: 'removeQualifier',
-        subject: this.statementPath,
+        subject: this.statement.getId(),
         qualifier
       })
     }
   },
 
   computed: {
-    statementPath() {
-      return this.subject + '_s_' + this.statement.getId()
-    },
-
     qualifiers() {
-      return this.$store.state.qualifierTriples[this.statementPath] || {}
+      return this.$store.state.qualifierTriples[this.statement.getId()] || {}
     }
   },
 
