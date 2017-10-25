@@ -5,7 +5,7 @@
       <button class="button is-primary" @click="showQuery">Show Query</button>
     </div>
 
-    <div class="result-table" v-if="query">
+    <div class="result-table" v-if="resultsVisible">
       <iframe v-bind:src="'https://query.wikidata.org/embed.html#' + encodedQuery"
               referrerpolicy="origin"
               sandbox="allow-scripts allow-same-origin allow-popups">
@@ -15,12 +15,14 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import QueryGenerator from '../sparql/QueryGenerator'
 
 export default {
   data() {
     return {
-      query: ''
+      query: '',
+      resultsVisible: false
     }
   },
 
@@ -39,8 +41,11 @@ export default {
     },
 
     showResults() {
-      this.query = this.generateQuery()
-      this.showResults = true
+      this.resultsVisible = false
+      Vue.nextTick(() => {
+        this.query = this.generateQuery()
+        this.resultsVisible = true
+      })
     }
   },
 
