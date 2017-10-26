@@ -7,12 +7,15 @@
     <div class="dropdown entity-selector">
       <input class="input dropdown-trigger"
              v-model="query"
-             @focus="focus"
-             @blur="unfocus"
+             @focus="hasFocus = true"
+             @blur="hasFocus = false"
              @keydown.enter="dropdownConfirm"
              @keydown.up="dropdownUp($event)"
              @keydown.down="dropdownDown($event)">
-      <div class="dropdown-menu results" v-show="hasFocus && query">
+      <div class="dropdown-menu results"
+           v-show="hovering || hasFocus && query"
+           @mouseleave="hovering = false"
+           @mouseenter="hovering = true">
         <div class="dropdown-content">
           <a class="dropdown-item"
              v-for="(result, index) in results"
@@ -47,6 +50,7 @@ export default {
       results: [],
       selected: 0,
       hasFocus: false,
+      hovering: false,
       query: ''
     }
   },
@@ -74,6 +78,8 @@ export default {
     }, 250),
 
     select(entity) {
+      this.selected = 0
+      this.hovering = false
       this.query = entity.label
       this.$emit('select', new Property(entity))
     },
@@ -97,17 +103,6 @@ export default {
 
     dropdownConfirm() {
       this.select(this.results[this.selected])
-    },
-
-    focus() {
-      this.hasFocus = true
-    },
-
-    unfocus() {
-      setTimeout(() => { // avoids a strange race condition between blur and click
-        this.hasFocus = false
-        this.selected = 0
-      }, 100)
     }
   }
 }

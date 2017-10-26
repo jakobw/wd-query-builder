@@ -8,12 +8,15 @@
       <input class="input dropdown-trigger"
              v-model="query"
              :disabled="visible"
-             @focus="focus"
-             @blur="unfocus"
+             @focus="hasFocus = true"
+             @blur="hasFocus = false"
              @keydown.enter="dropdownConfirm"
              @keydown.up="dropdownUp($event)"
              @keydown.down="dropdownDown($event)">
-      <div class="dropdown-menu results" v-show="hasFocus">
+      <div class="dropdown-menu results"
+           v-show="hovering || hasFocus"
+           @mouseleave="hovering = false"
+           @mouseenter="hovering = true">
         <div class="dropdown-content">
           <a class="dropdown-item"
              v-for="(value, index) in filteredSpecialValues"
@@ -60,6 +63,7 @@ export default {
       specialValues: Object.values(specialValues),
       results: [],
       hasFocus: false,
+      hovering: false,
       query: '',
       selected: 0
     }
@@ -113,6 +117,7 @@ export default {
     },
 
     selectSpecialValue(value) {
+      this.unfocus()
       this.query = value
 
       if (value === specialValues.ANY_MATCHING) {
@@ -124,19 +129,16 @@ export default {
     },
 
     selectItem(item) {
+      this.unfocus()
       this.query = item.label
       this.$emit('select', new ItemValue(item))
     },
 
-    focus() {
-      this.hasFocus = true
-    },
-
     unfocus() {
-      setTimeout(() => { // avoids a strange race condition between blur and click
-        this.hasFocus = false
-        this.selected = 0
-      }, 100)
+      this.hovering = false
+      this.hasFocus = false
+      this.$el.querySelector('input').blur()
+      this.selected = 0
     }
   },
 
