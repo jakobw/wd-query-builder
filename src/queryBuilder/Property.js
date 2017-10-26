@@ -1,4 +1,4 @@
-export default class PropertyPredicate {
+export default class Property {
   constructor(property) {
     this.property = property
   }

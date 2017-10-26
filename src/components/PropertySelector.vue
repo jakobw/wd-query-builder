@@ -44,6 +44,7 @@ import debounce from 'lodash.debounce'
 import { api } from '../api/newApi'
 import PropertySearch from '../api/PropertySearch'
 import Property from '../queryBuilder/Property'
+import specialProperties from '../queryBuilder/specialProperties'
 
 const propertySearch = new PropertySearch(api)
 
@@ -63,6 +64,14 @@ export default {
     query: function(term) {
       this.searching = true
       this.getProperties(term)
+    },
+
+    results: function(results) {
+      const hasInstanceOf = results.some((result) => result.id === 'P31')
+      const hasInstanceOfSubclass = results.some((result) => result === specialProperties.INSTANCE_OF_ANY_SUBCLASS)
+      if (hasInstanceOf && !hasInstanceOfSubclass) {
+        this.results.unshift(specialProperties.INSTANCE_OF_ANY_SUBCLASS)
+      }
     }
   },
 
