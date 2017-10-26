@@ -21,7 +21,7 @@
           <i class="dropdown-item" v-if="searching">
             Searching for items...
           </i>
-          <i class="dropdown-item" v-if="!results.length && !filteredSpecialValues.length">
+          <i class="dropdown-item" v-else-if="!results.length && !filteredSpecialValues.length">
             No items found. Try searching for a different keyword.
           </i>
 
