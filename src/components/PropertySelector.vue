@@ -17,6 +17,13 @@
            @mouseleave="hovering = false"
            @mouseenter="hovering = true">
         <div class="dropdown-content">
+          <i class="dropdown-item" v-if="searching">
+            Searching for properties...
+          </i>
+          <i class="dropdown-item" v-else-if="results.length === 0">
+            No properties found. Try searching for a different keyword.
+          </i>
+
           <a class="dropdown-item"
              v-for="(result, index) in results"
              @click="select(result)"
@@ -25,10 +32,6 @@
              <p class="entity-label">{{result.label}}</p>
              <p class="entity-description">{{result.description}}</p>
            </a>
-
-           <i class="dropdown-item" v-if="results.length === 0">
-             No properties found. Try searching for a different keyword.
-           </i>
         </div>
       </div>
     </div>
@@ -51,12 +54,14 @@ export default {
       selected: 0,
       hasFocus: false,
       hovering: false,
+      searching: false,
       query: ''
     }
   },
 
   watch: {
     query: function(term) {
+      this.searching = true
       this.getProperties(term)
     }
   },
@@ -71,6 +76,7 @@ export default {
       propertySearch.search(term)
         .then(data => {
           this.results = data
+          this.searching = false
         })
         .catch(error => {
           console.error('api error: ' + error) // TODO: show error to user
