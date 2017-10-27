@@ -77,7 +77,7 @@ export default {
       hovering: false,
       searching: false,
       query: '',
-      selected: 0
+      selected: -1
     }
   },
 
