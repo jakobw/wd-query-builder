@@ -92,6 +92,7 @@ export default {
     getItems: debounce(function(term) {
       if (!term) {
         this.results = []
+        this.searching = false
         return
       }
 
