@@ -18,6 +18,9 @@
            @mouseleave="hovering = false"
            @mouseenter="hovering = true">
         <div class="dropdown-content">
+          <i class="dropdown-item" v-if="!query">
+            Start typing to search for specific items...
+          </i>
           <i class="dropdown-item" v-if="searching">
             Searching for items...
           </i>
