@@ -29,8 +29,8 @@
              @click="select(result)"
              @mouseover="dropdownSelect(index)"
              :class="{ 'is-active': index === selected }">
-             <p class="entity-label">{{result.label}}</p>
-             <p class="entity-description">{{result.description}}</p>
+             <p class="dropdown-item-label">{{result.label}}</p>
+             <p class="dropdown-item-description">{{result.description}}</p>
            </a>
         </div>
       </div>

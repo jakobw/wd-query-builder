@@ -33,7 +33,12 @@
              @mouseover="dropdownSelect(index)"
              @click="selectSpecialValue(value)"
              :class="{ 'is-active': index === selected }">
-             {{value}}
+             <p class="dropdown-item-label">
+               {{value.label}}
+             </p>
+             <p class="dropdown-item-description">
+               {{value.description}}
+             </p>
           </a>
           <hr class="dropdown-divider" v-show="results.length > 0 && filteredSpecialValues.length > 0">
           <a class="dropdown-item"
@@ -41,8 +46,8 @@
              @click="selectItem(result)"
              @mouseover="dropdownSelect(filteredSpecialValues.length + index)"
              :class="{ 'is-active': filteredSpecialValues.length + index === selected }">
-             <p class="entity-label">{{result.label}}</p>
-             <p class="entity-description">{{result.description}}</p>
+             <p class="dropdown-item-label">{{result.label}}</p>
+             <p class="dropdown-item-description">{{result.description}}</p>
            </a>
         </div>
       </div>
@@ -127,7 +132,7 @@ export default {
 
     selectSpecialValue(value) {
       this.unfocus()
-      this.query = value
+      this.query = value.label
 
       if (value === specialValues.ANY_MATCHING) {
         // TODO: use a factory for all special values
@@ -153,14 +158,14 @@ export default {
 
   computed: {
     filteredSpecialValues: function () {
-      return this.specialValues.filter(value => value.includes(this.query))
+      return this.specialValues.filter(value => value.label.includes(this.query))
     }
   }
 }
 </script>
 
 <style lang="scss">
-.entity-label {
+.dropdown-item-label {
   font-weight: bold;
 }
 </style>
