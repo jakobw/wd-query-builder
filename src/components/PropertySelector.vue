@@ -127,7 +127,11 @@ export default {
     dropdownConfirm() {
       this.select(this.results[this.selected])
     }
-  }
+  },
+
+  mounted() {
+    this.$el.querySelector('input').focus()
+  },
 }
 </script>
 

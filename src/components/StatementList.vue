@@ -25,10 +25,6 @@ export default {
     this.addStatement()
   },
 
-  mounted() {
-    this.$el.querySelector('input').focus()
-  },
-
   data() {
     return {
       nextId: 0
