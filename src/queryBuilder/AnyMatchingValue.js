@@ -1,3 +1,5 @@
+import specialValues from './specialValues'
+
 export default class AnyMatchingValue {
   constructor(object) {
     this.object = object
@@ -5,5 +7,9 @@ export default class AnyMatchingValue {
 
   getObject() {
     return `?${this.object}`
+  }
+
+  getLabel() {
+    return specialValues.ANY_MATCHING.label
   }
 }

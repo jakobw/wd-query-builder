@@ -1,17 +1,23 @@
 <template>
 <div class="field has-addons">
-  <p class="control">
+  <div class="control">
     <a class="button is-static">Property</a>
-  </p>
-  <p class="control is-expanded">
+  </div>
+  <div class="control is-expanded has-icons-right">
     <div class="dropdown entity-selector">
-      <input class="input dropdown-trigger"
+      <input class="input"
              v-model="query"
              @focus="hasFocus = true"
              @blur="hasFocus = false"
+             @keydown="isValidInput = false"
              @keydown.enter="dropdownConfirm"
              @keydown.up="dropdownUp($event)"
              @keydown.down="dropdownDown($event)">
+
+      <span class="icon is-right" v-if="!hasFocus">
+       <i class="fa" :class="{ 'fa-check': isValidInput, 'fa-warning': !isValidInput }"></i>
+      </span>
+
       <div class="dropdown-menu results"
            v-show="hovering || hasFocus && query"
            @mouseleave="hovering = false"
@@ -35,7 +41,7 @@
         </div>
       </div>
     </div>
-  </p>
+  </div>
 </div>
 </template>
 
@@ -56,6 +62,7 @@ export default {
       hasFocus: false,
       hovering: false,
       searching: false,
+      isValidInput: false,
       query: ''
     }
   },
@@ -96,6 +103,7 @@ export default {
       this.selected = 0
       this.hovering = false
       this.query = entity.label
+      this.isValidInput = true
       this.$emit('select', new Property(entity))
     },
 

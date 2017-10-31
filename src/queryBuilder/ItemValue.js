@@ -6,4 +6,8 @@ export default class ItemValue {
   getObject() {
     return `wd:${this.item.id}`
   }
+
+  getLabel() {
+    return this.item.label
+  }
 }

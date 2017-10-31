@@ -1,18 +1,24 @@
 <template>
 <div class="field has-addons">
-  <p class="control">
+  <div class="control">
     <a class="button is-static" :disabled="visible">Value</a>
-  </p>
-  <p class="control is-expanded">
+  </div>
+  <div class="control is-expanded has-icons-right">
     <div class="dropdown entity-selector">
       <input class="input dropdown-trigger"
              v-model="query"
              :disabled="visible"
              @focus="hasFocus = true"
              @blur="hasFocus = false"
+             @keydown="isValidInput = false"
              @keydown.enter="dropdownConfirm"
              @keydown.up="dropdownUp($event)"
              @keydown.down="dropdownDown($event)">
+
+      <span class="icon is-right" v-if="!hasFocus && !visible">
+        <i class="fa" :class="{ 'fa-check': isValidInput, 'fa-warning': !isValidInput }"></i>
+      </span>
+
       <div class="dropdown-menu results"
            v-show="hovering || hasFocus"
            @mouseleave="hovering = false"
@@ -52,7 +58,7 @@
         </div>
       </div>
     </div>
-  </p>
+  </div>
 </div>
 </template>
 
@@ -76,6 +82,7 @@ export default {
       hasFocus: false,
       hovering: false,
       searching: false,
+      isValidInput: false,
       query: '',
       selected: -1
     }
@@ -132,21 +139,24 @@ export default {
     },
 
     selectSpecialValue(value) {
-      this.unfocus()
-      this.query = value.label
-
       if (value === specialValues.ANY_MATCHING) {
         // TODO: use a factory for all special values
         // TODO: value selector should not need to know statement path; statement should handle special values?
         value = new AnyMatchingValue(this.statementPath)
       }
-      this.$emit('select', value)
+
+      this.selectValue(value)
     },
 
     selectItem(item) {
+      this.selectValue(new ItemValue(item))
+    },
+
+    selectValue(value) {
       this.unfocus()
-      this.query = item.label
-      this.$emit('select', new ItemValue(item))
+      this.query = value.getLabel()
+      this.isValidInput = true
+      this.$emit('select', value)
     },
 
     unfocus() {
