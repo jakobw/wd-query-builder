@@ -18,6 +18,8 @@
 </template>
 
 <script>
+require('font-awesome-sass-loader');
+
 import { store } from './store'
 import StatementList from './components/StatementList.vue'
 import QueryResults from './components/QueryResults.vue'
