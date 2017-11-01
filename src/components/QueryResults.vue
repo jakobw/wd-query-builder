@@ -1,8 +1,14 @@
 <template>
   <div class="results">
-    <div class="buttons">
-      <button class="button is-primary" @click="showResults">Show Results</button>
-      <button class="button is-primary" @click="showQuery">Show Query</button>
+    <div class="buttons columns">
+      <div class="column">
+        <button class="button is-primary" @click="showResults">Show Results</button>
+        <button class="button is-primary" @click="showQuery">Show Query</button>
+      </div>
+
+      <div class="column is-narrow">
+        <ShareQuery></ShareQuery>
+      </div>
     </div>
 
     <div class="result-table" v-if="resultsVisible">
@@ -17,6 +23,7 @@
 <script>
 import Vue from 'vue'
 import QueryGenerator from '../sparql/QueryGenerator'
+import ShareQuery from './ShareQuery.vue'
 
 export default {
   data() {
@@ -53,6 +60,10 @@ export default {
     encodedQuery() {
       return encodeURI(this.query)
     }
+  },
+
+  components: {
+    ShareQuery
   }
 }
 </script>
