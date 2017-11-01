@@ -16,7 +16,7 @@
 
 <script>
 import StatementComponent from './Statement.vue'
-import Statement from '../wikidata/Statement'
+import Statement from '../queryBuilder/Statement'
 
 export default {
   props: ['subject'],

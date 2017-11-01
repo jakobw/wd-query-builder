@@ -42,7 +42,7 @@ import Vue from 'vue'
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
 import QualifierComponent from './Qualifier.vue'
-import Qualifier from '../wikidata/Qualifier'
+import Qualifier from '../queryBuilder/Qualifier'
 import specialValues from '../queryBuilder/specialValues'
 
 export default {
