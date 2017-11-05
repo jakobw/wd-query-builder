@@ -30,6 +30,17 @@ export default class QuerySerializer {
 
 
   serializeQualifiers(qualifiers) {
-    return {}
+    const result = {}
+
+    for (const subject in qualifiers) {
+      result[subject] = {}
+      for (const qualifierId in qualifiers[subject]) {
+        result[subject][qualifierId] = qualifierSerializer.serialize(
+          qualifiers[subject][qualifierId]
+        )
+      }
+    }
+
+    return result
   }
 }
