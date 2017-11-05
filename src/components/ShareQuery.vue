@@ -17,7 +17,6 @@ export default {
       const serializer = new QuerySerializer
 
       return window.location.origin
-        + '/'
         + window.location.pathname
         + '?query='
         + encodeURI(JSON.stringify(serializer.serialize(this.getQueryJson())))
