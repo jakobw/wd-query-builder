@@ -16,6 +16,7 @@ export const store = new Vuex.Store({
   mutations: {
     initialize(state, payload) {
       state.statementTriples = payload.query.statements
+      state.qualifierTriples = payload.query.qualifiers
     },
 
     addStatement(state, payload) {

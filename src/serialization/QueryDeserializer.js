@@ -30,9 +30,13 @@ export default class QueryDeserializer {
   deserializeQualifiers(qualifiers) {
     const result = {}
 
-    // for (const qualifier in qualifiers) {
-    //   result[qualifier]
-    // }
+    for (const subject in qualifiers) {
+      result[subject] = {}
+
+      for (const qualifierId in qualifiers[subject]) {
+        result[subject][qualifierId] = qualifierDeserializer.deserialize(qualifierId, qualifiers[subject][qualifierId])
+      }
+    }
 
     return result
   }
