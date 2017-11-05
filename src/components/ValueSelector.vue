@@ -1,13 +1,13 @@
 <template>
 <div class="field has-addons">
   <div class="control">
-    <a class="button is-static" :disabled="visible">Value</a>
+    <a class="button is-static" :disabled="!visible">Value</a>
   </div>
   <div class="control is-expanded has-icons-right">
     <div class="dropdown entity-selector">
       <input class="input dropdown-trigger"
              v-model="query"
-             :disabled="visible"
+             :disabled="!visible"
              @focus="hasFocus = true"
              @blur="hasFocus = false"
              @keydown="isValidInput = false"
@@ -15,7 +15,7 @@
              @keydown.up="dropdownUp($event)"
              @keydown.down="dropdownDown($event)">
 
-      <span class="icon is-right" v-if="!hasFocus && !visible">
+      <span class="icon is-right" v-if="!hasFocus && visible">
         <i class="fa" :class="{ 'fa-check': isValidInput, 'fa-warning': !isValidInput }"></i>
       </span>
 
@@ -73,7 +73,14 @@ import AnyMatchingValue from '../queryBuilder/AnyMatchingValue'
 const itemSearch = new ItemSearch(api)
 
 export default {
-  props: ['visible', 'statementPath'],
+  props: ['disabled', 'initial', 'statementPath'],
+
+  created() {
+    if (this.initial) {
+      this.query = this.initial
+      this.isValidInput = true
+    }
+  },
 
   data() {
     return {
@@ -170,6 +177,10 @@ export default {
   computed: {
     filteredSpecialValues: function () {
       return this.specialValues.filter(value => value.label.includes(this.query))
+    },
+
+    visible() {
+      return !this.disabled || this.initial
     }
   }
 }

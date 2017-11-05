@@ -2,12 +2,15 @@
 <div class="statement">
   <div class="columns">
     <div class="column">
-      <PropertySelector v-on:select="selectProperty" ref="property"></PropertySelector>
+      <PropertySelector v-on:select="selectProperty"
+                        :initial="propertyLabel">
+      </PropertySelector>
     </div>
     <div class="column">
       <ValueSelector v-on:select="selectValue"
-                     :visible="valueSelectorDisabled"
+                     :disabled="valueSelectorDisabled"
                      :statementPath="statement.getId()"
+                     :initial="valueLabel"
                      ref="value">
       </ValueSelector>
     </div>
@@ -16,7 +19,7 @@
     </div>
   </div>
 
-  <div class="columns" v-if="hasItemFilter">
+  <div class="columns" v-if="hasItemFilter()">
     <div class="column is-offset-1 is-11">
       <StatementList :subject="statement.getId()"></StatementList>
     </div>
@@ -51,7 +54,6 @@ export default {
   data() {
     return {
       valueSelectorDisabled: true,
-      hasItemFilter: false,
       nextQualifierId: 0
     }
   },
@@ -59,7 +61,6 @@ export default {
   methods: {
     selectProperty(property) {
       this.valueSelectorDisabled = false
-      // TODO: find better way than nextTick
       Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus())
 
       this.$store.commit({
@@ -71,18 +72,17 @@ export default {
     },
 
     selectValue(value) {
-      if (value.getObject().indexOf('?') === 0) { // FIXME: silly
-        this.hasItemFilter = true
-      } else {
-        this.hasItemFilter = false
-      }
-
       this.$store.commit({
         type: 'setStatementValue',
         subject: this.subject,
         id: this.statement.getId(),
         value
       })
+
+      // TODO: This is needed because Vue does not detect changes on the
+      //       statement due to it not using Vue.set. There is probably a
+      //       better way to do this...
+      this.$forceUpdate()
     },
 
     addQualifier() {
@@ -100,12 +100,27 @@ export default {
         subject: this.statement.getId(),
         qualifier
       })
-    }
+    },
+
+    hasItemFilter() {
+      const value = this.statement.getValue()
+      return value && value.getId() === specialValues.ANY_MATCHING.id
+    },
   },
 
   computed: {
     qualifiers() {
       return this.$store.state.qualifierTriples[this.statement.getId()] || {}
+    },
+
+    valueLabel() {
+      const value = this.statement.getValue()
+      return value && value.getLabel() || ''
+    },
+
+    propertyLabel() {
+      const property = this.statement.getProperty()
+      return property && property.getLabel() || ''
     }
   },
 

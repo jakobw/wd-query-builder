@@ -3,6 +3,10 @@ export default class Property {
     this.property = property
   }
 
+  getLabel() {
+    return this.property.label
+  }
+
   getValuePredicate() {
     return `wdt:${this.property.id}`
   }
@@ -17,5 +21,12 @@ export default class Property {
 
   getQualifierPredicate() {
     return `pq:${this.property.id}`
+  }
+
+  toJSON() {
+    return {
+      id: this.property.id,
+      label: this.property.label
+    }
   }
 }

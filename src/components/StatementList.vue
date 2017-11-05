@@ -22,7 +22,9 @@ export default {
   props: ['subject'],
 
   created() {
-    this.addStatement()
+    if (this.statements.length === 0) {
+      this.addStatement()
+    }
   },
 
   data() {
@@ -52,7 +54,7 @@ export default {
 
   computed: {
     statements() {
-      return this.$store.state.statementTriples[this.subject]
+      return this.$store.state.statementTriples[this.subject] || []
     }
   },
 

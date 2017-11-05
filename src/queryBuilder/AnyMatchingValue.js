@@ -12,4 +12,16 @@ export default class AnyMatchingValue {
   getLabel() {
     return specialValues.ANY_MATCHING.label
   }
+
+  getId() {
+    return specialValues.ANY_MATCHING.id
+  }
+
+  toJSON() {
+    return {
+      object: this.object,
+      id: this.getId(),
+      label: specialValues.ANY_MATCHING.label
+    }
+  }
 }

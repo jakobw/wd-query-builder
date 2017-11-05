@@ -55,6 +55,8 @@ import specialProperties from '../queryBuilder/specialProperties'
 const propertySearch = new PropertySearch(api)
 
 export default {
+  props: ['initial'],
+
   data() {
     return {
       results: [],
@@ -62,8 +64,8 @@ export default {
       hasFocus: false,
       hovering: false,
       searching: false,
-      isValidInput: false,
-      query: ''
+      isValidInput: this.initial,
+      query: this.initial
     }
   },
 
@@ -130,7 +132,7 @@ export default {
   },
 
   mounted() {
-    this.$el.querySelector('input').focus()
+    if (!this.initial) this.$el.querySelector('input').focus()
   },
 }
 </script>

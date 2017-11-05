@@ -10,4 +10,15 @@ export default class ItemValue {
   getLabel() {
     return this.item.label
   }
+
+  getId() {
+    return this.item.id
+  }
+
+  toJSON() {
+    return {
+      id: this.item.id,
+      label: this.item.label
+    }
+  }
 }

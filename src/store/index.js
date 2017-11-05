@@ -14,6 +14,10 @@ export const store = new Vuex.Store({
   },
 
   mutations: {
+    initialize(state, payload) {
+      state.statementTriples = payload.query.statements
+    },
+
     addStatement(state, payload) {
       if (!state.statementTriples[payload.subject]) {
         Vue.set(state.statementTriples, payload.subject, {})

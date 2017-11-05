@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import QuerySerializer from '../serialization/QuerySerializer'
+
 export default {
   methods: {
     share() {
@@ -12,18 +14,20 @@ export default {
     },
 
     generateShareUrl() {
+      const serializer = new QuerySerializer
+
       return window.location.origin
         + '/'
         + window.location.pathname
         + '?query='
-        + encodeURI(this.getQueryJson())
+        + encodeURI(JSON.stringify(serializer.serialize(this.getQueryJson())))
     },
 
     getQueryJson() {
-      return JSON.stringify({
+      return {
         statements: this.$store.state.statementTriples,
         qualifiers: this.$store.state.qualifierTriples
-      })
+      }
     }
   }
 }

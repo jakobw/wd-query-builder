@@ -23,9 +23,30 @@ require('font-awesome-sass-loader');
 import { store } from './store'
 import StatementList from './components/StatementList.vue'
 import QueryResults from './components/QueryResults.vue'
+import QueryDeserializer from './serialization/QueryDeserializer'
 
 export default {
   store,
+
+  methods: {
+    initializeFromUrl() {
+      const query = JSON.parse(decodeURI(
+        window.location.search.split('?query=')[1]
+      ))
+      const deserializer = new QueryDeserializer()
+
+      this.$store.commit({
+        type: 'initialize',
+        query: deserializer.deserialize(query)
+      })
+    }
+  },
+
+  created() {
+    if (window.location.search.includes('?query')) {
+      this.initializeFromUrl()
+    }
+  },
 
   components: {
     StatementList,
