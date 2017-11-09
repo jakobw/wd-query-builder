@@ -9,7 +9,7 @@
     </Statement>
   </div>
   <button class="button add-button" @click="addStatement">
-    + add statement
+    + add statement filter
   </button>
 </div>
 </template>

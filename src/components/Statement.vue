@@ -36,7 +36,7 @@
     </Qualifier>
   </div>
 
-  <a class="add-qualifier button is-small" @click="addQualifier">+ add qualifier</a>
+  <a class="add-qualifier button is-small" @click="addQualifier">+ add qualifier filter</a>
 </div>
 </template>
 
