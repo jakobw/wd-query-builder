@@ -3,7 +3,6 @@ export default class Query {
   constructor() {
     this.variables = []
     this.triples = []
-    this.limit = 10
     this.services = []
   }
 
@@ -26,6 +25,13 @@ export default class Query {
     this.services.push(service)
   }
 
+  setLimit(limit) {
+    if (limit === '') {
+      limit = 20
+    }
+    this.limit = limit
+  }
+
   toString() {
     return 'SELECT DISTINCT '
       + this.variables.join(' ')
@@ -33,6 +39,6 @@ export default class Query {
       + this.joinTriples()
       + this.services.join(' ')
       + ' } '
-      + 'LIMIT ' + this.limit
+      + (this.limit ? 'LIMIT ' + this.limit : '')
   }
 }

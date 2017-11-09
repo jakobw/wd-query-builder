@@ -9,7 +9,8 @@ export default class QueryDeserializer {
   deserialize(query) {
     return {
       statements: this.deserializeStatements(query.statements),
-      qualifiers: this.deserializeQualifiers(query.qualifiers)
+      qualifiers: this.deserializeQualifiers(query.qualifiers),
+      limit: query.limit
     }
   }
 

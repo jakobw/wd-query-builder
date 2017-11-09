@@ -25,7 +25,8 @@ export default {
     getQueryJson() {
       return {
         statements: this.$store.state.statementTriples,
-        qualifiers: this.$store.state.qualifierTriples
+        qualifiers: this.$store.state.qualifierTriples,
+        limit: this.$store.state.limit
       }
     }
   }

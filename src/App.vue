@@ -10,6 +10,10 @@
   </div>
 
   <div class="container">
+    <QueryOptions></QueryOptions>
+  </div>
+
+  <div class="container">
     <hr>
 
     <QueryResults></QueryResults>
@@ -22,6 +26,7 @@ require('font-awesome-sass-loader');
 
 import { store } from './store'
 import StatementList from './components/StatementList.vue'
+import QueryOptions from './components/QueryOptions.vue'
 import QueryResults from './components/QueryResults.vue'
 import QueryDeserializer from './serialization/QueryDeserializer'
 
@@ -50,6 +55,7 @@ export default {
 
   components: {
     StatementList,
+    QueryOptions,
     QueryResults
   }
 }

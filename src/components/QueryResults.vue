@@ -36,8 +36,7 @@ export default {
   methods: {
     generateQuery() {
       const generator = new QueryGenerator(
-        this.$store.state.statementTriples,
-        this.$store.state.qualifierTriples
+        this.$store.state
       )
 
       return generator.generateQuery()

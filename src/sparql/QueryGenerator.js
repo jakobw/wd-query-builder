@@ -1,9 +1,10 @@
 import Query from './Query'
 
 export default class QueryGenerator {
-  constructor(statementTriples, qualifierTriples) {
-    this.statementTriples = statementTriples
-    this.qualifierTriples = qualifierTriples
+  constructor(query) {
+    this.statementTriples = query.statementTriples
+    this.qualifierTriples = query.qualifierTriples
+    this.limit = query.limit
   }
 
   generateQuery() {
@@ -14,6 +15,8 @@ export default class QueryGenerator {
     this.addQualifierTriples(query)
 
     query.addService('SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }')
+
+    query.setLimit(this.limit)
 
     return query.toString()
   }

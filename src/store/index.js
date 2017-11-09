@@ -6,17 +6,15 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     statementTriples: {},
-    qualifierTriples: {}
-  },
-
-  actions: {
-
+    qualifierTriples: {},
+    limit: ''
   },
 
   mutations: {
     initialize(state, payload) {
       state.statementTriples = payload.query.statements
       state.qualifierTriples = payload.query.qualifiers
+      state.limit = payload.query.limit
     },
 
     addStatement(state, payload) {
@@ -57,6 +55,10 @@ export const store = new Vuex.Store({
 
     setQualifierValue(state, payload) {
       state.qualifierTriples[payload.subject][payload.id].setValue(payload.value)
+    },
+
+    updateLimit(state, payload) {
+      state.limit = payload.limit
     }
   }
 })

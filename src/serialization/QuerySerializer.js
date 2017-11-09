@@ -9,7 +9,8 @@ export default class QuerySerializer {
   serialize(query) {
     return {
       statements: this.serializeStatements(query.statements),
-      qualifiers: this.serializeQualifiers(query.qualifiers)
+      qualifiers: this.serializeQualifiers(query.qualifiers),
+      limit: query.limit
     }
   }
 
