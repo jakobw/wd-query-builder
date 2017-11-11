@@ -14,5 +14,15 @@ body {
 }
 
 .title {
+  &.is-5 {
+    margin-bottom: 1rem;
+  }
+
   font-family: 'Charter', 'Linux Libertine', 'Georgia', 'Times', serif;
+}
+
+.builder-box {
+  padding: 10px;
+  border: 1px solid darken($light, 10%);
+  background: $white;
 }

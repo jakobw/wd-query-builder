@@ -1,17 +1,19 @@
 <template>
-<div class="query-options columns">
-  <div class="column">
-    <LimitQuery></LimitQuery>
-  </div>
+<div class="builder-box query-options">
+  <div class="columns">
+    <div class="column">
+      <LimitQuery></LimitQuery>
+    </div>
 
-  <div class="column">
-    <div class="field">
-      <label class="label">Order by</label>
-      <div class="control">
-        <div class="select">
-          <select>
-            <option>label</option>
-          </select>
+    <div class="column">
+      <div class="field">
+        <label class="label">Order by</label>
+        <div class="control">
+          <div class="select">
+            <select>
+              <option>label</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>

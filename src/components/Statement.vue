@@ -1,5 +1,5 @@
 <template>
-<div class="statement">
+<div class="statement builder-box">
   <div class="columns">
     <div class="column">
       <PropertySelector v-on:select="selectProperty"
@@ -145,9 +145,6 @@ export default {
     margin-top: 0;
   }
 
-  padding: 10px;
-  border: 1px solid darken($light, 10%);
-  background: $white;
   margin-top: 20px;
 
   .add-qualifier {

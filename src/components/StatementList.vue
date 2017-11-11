@@ -66,6 +66,6 @@ export default {
 
 <style lang="scss">
 .add-button {
-  margin-top: 20px
+  margin-top: 10px
 }
 </style>
