@@ -8,14 +8,18 @@
                v-on:remove="removeStatement(statement)">
     </Statement>
   </div>
+
   <button class="button add-button" @click="addStatement">
     + add statement filter
   </button>
+
+  <ColumnSelector :subject="subject"></ColumnSelector>
 </div>
 </template>
 
 <script>
 import StatementComponent from './Statement.vue'
+import ColumnSelector from './ColumnSelector.vue'
 import Statement from '../queryBuilder/Statement'
 
 export default {
@@ -59,7 +63,8 @@ export default {
   },
 
   components: {
-    Statement: StatementComponent
+    Statement: StatementComponent,
+    ColumnSelector
   }
 }
 </script>

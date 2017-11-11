@@ -16,6 +16,7 @@
     "lodash.debounce": "^4.0.8",
     "query-string": "^5.0.0",
     "vue": "^2.4.4",
+    "vue-multiselect": "^2.0.6",
     "vuex": "^3.0.0"
   },
   "devDependencies": {

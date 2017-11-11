@@ -10,6 +10,7 @@ export default class QuerySerializer {
     return {
       statements: this.serializeStatements(query.statements),
       qualifiers: this.serializeQualifiers(query.qualifiers),
+      select: query.select,
       limit: query.limit
     }
   }

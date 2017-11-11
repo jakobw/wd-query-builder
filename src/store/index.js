@@ -7,6 +7,7 @@ export const store = new Vuex.Store({
   state: {
     statementTriples: {},
     qualifierTriples: {},
+    select: {},
     limit: ''
   },
 
@@ -59,6 +60,18 @@ export const store = new Vuex.Store({
 
     updateLimit(state, payload) {
       state.limit = payload.limit
+    },
+
+    updateSelectedProperties(state, payload) {
+      if (!state.select[payload.subject]) {
+        Vue.set(
+          state.select,
+          payload.subject,
+          { id: true, label: true, properties: [] }
+        )
+      }
+
+      Vue.set(state.select[payload.subject], 'properties', payload.properties)
     }
   }
 })
