@@ -26,6 +26,7 @@ export default {
       return {
         statements: this.$store.state.statementTriples,
         qualifiers: this.$store.state.qualifierTriples,
+        select: this.$store.state.select,
         limit: this.$store.state.limit
       }
     }

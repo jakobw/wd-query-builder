@@ -20,6 +20,7 @@
       <div class="control is-small">
         <MultiSelect
           :options="properties"
+          v-model="selectedProperties"
           :searchable="true"
           :multiple="true"
           :internal-search="false"
@@ -28,7 +29,7 @@
           <template slot="option" scope="props">
             <div class="option__desc">
               <span class="option__title">{{ props.option.label }}</span>
-              <span class="option__small">hi.</span>
+              <span class="option__small">{{ props.option.description }}</span>
             </div>
           </template>
 
@@ -59,6 +60,13 @@ export default {
       properties: [],
       selectedProperties: [],
       isLoading: false
+    }
+  },
+
+  created() {
+    const selectedColumns = this.$store.state.select[this.subject]
+    if (selectedColumns) {
+      this.selectedProperties = selectedColumns.properties
     }
   },
 

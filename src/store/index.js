@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
     initialize(state, payload) {
       state.statementTriples = payload.query.statements
       state.qualifierTriples = payload.query.qualifiers
+      state.select = payload.query.select
       state.limit = payload.query.limit
     },
 
