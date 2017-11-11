@@ -3,6 +3,7 @@ export default class Query {
   constructor() {
     this.variables = []
     this.triples = []
+    this.optionalTriples = []
     this.services = []
   }
 
@@ -17,6 +18,17 @@ export default class Query {
   joinTriples() {
     return this.triples.reduce(
       (acc, triple) => acc + triple.join(' ') + ' .',
+      ''
+    )
+  }
+
+  addOptionalTriple(subject, predicate, object) {
+    this.optionalTriples.push([subject, predicate, object])
+  }
+
+  joinOptionalTriples() {
+    return this.optionalTriples.reduce(
+      (acc, triple) => acc + 'OPTIONAL {' + triple.join(' ') + ' .}',
       ''
     )
   }
@@ -37,6 +49,7 @@ export default class Query {
       + this.variables.join(' ')
       + ' WHERE {'
       + this.joinTriples()
+      + this.joinOptionalTriples()
       + this.services.join(' ')
       + ' } '
       + (this.limit ? 'LIMIT ' + this.limit : '')

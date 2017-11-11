@@ -5,6 +5,7 @@ export default class QueryGenerator {
     this.statementTriples = query.statementTriples
     this.qualifierTriples = query.qualifierTriples
     this.limit = query.limit
+    this.select = query.select
   }
 
   generateQuery() {
@@ -13,6 +14,7 @@ export default class QueryGenerator {
     this.addVariables(query)
     this.addStatementTriples(query)
     this.addQualifierTriples(query)
+    this.addPropertiesToSelect(query)
 
     query.addService('SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }')
 
@@ -69,5 +71,24 @@ export default class QueryGenerator {
       query.addVariable(`?${subject}`)
       query.addVariable(`?${subject}Label`)
     }
+  }
+
+  addPropertiesToSelect(query) {
+    for (const subject in this.select) {
+      this.select[subject].properties.forEach(property => {
+        const varName = `?${subject}` + this.labelToVar(property.label)
+
+        query.addOptionalTriple(
+          `?${subject}`,
+          `wdt:${property.id}`, //TODO: should use property object
+          varName
+        )
+        query.addVariable(varName)
+      })
+    }
+  }
+
+  labelToVar(label) {
+    return label.replace(/[^\w]+/g, '')
   }
 }
