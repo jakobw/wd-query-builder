@@ -1,44 +1,49 @@
 <template>
 <div class="column-selector builder-box">
-  <h5 class="title is-5">Result columns</h5>
-  <div class="field is-grouped">
-    <p class="control">
-      <label class="button checkbox">
-        <input type="checkbox" checked>
-        item id
-      </label>
-    </p>
+  <h5 class="title is-5">
+    <a @click="expanded = !expanded">[{{ expanded ? '-' : '+' }}]</a>
+    Result columns
+  </h5>
+  <div v-show="expanded" class="fields">
+    <div class="field is-grouped">
+      <p class="control">
+        <label class="button checkbox">
+          <input type="checkbox" checked>
+          item id
+        </label>
+      </p>
 
-    <p class="control">
-      <label class="button checkbox">
-        <input type="checkbox" checked>
-        item label
-      </label>
-    </p>
-  </div>
+      <p class="control">
+        <label class="button checkbox">
+          <input type="checkbox" checked>
+          item label
+        </label>
+      </p>
+    </div>
 
-  <div class="field">
-    <div class="control">
-      <MultiSelect
-        :options="properties"
-        v-model="selectedProperties"
-        :multiple="true"
-        :close-on-select="false"
-        :internal-search="false"
-        placeholder="Select properties"
-        @search-change="getOptions"
-        @input="updateSelectedColumns">
-        <template slot="option" scope="props">
-          <span class="dropdown-item-label">{{ props.option.label }}</span>
-          <span class="dropdown-item-description">{{ props.option.description }}</span>
-        </template>
+    <div class="field">
+      <div class="control">
+        <MultiSelect
+          :options="properties"
+          v-model="selectedProperties"
+          :multiple="true"
+          :close-on-select="false"
+          :internal-search="false"
+          placeholder="Select properties"
+          @search-change="getOptions"
+          @input="updateSelectedColumns">
+          <template slot="option" scope="props">
+            <span class="dropdown-item-label">{{ props.option.label }}</span>
+            <span class="dropdown-item-description">{{ props.option.description }}</span>
+          </template>
 
-        <template slot="tag" scope="props">
-          <span class="selected">
-            {{ props.option.label }}
-          </span>
-        </template>
-      </MultiSelect>
+          <template slot="tag" scope="props">
+            <span class="selected">
+              {{ props.option.label }}
+            </span>
+          </template>
+        </MultiSelect>
+      </div>
     </div>
   </div>
 </div>
@@ -60,7 +65,8 @@ export default {
     return {
       properties: [],
       selectedProperties: [],
-      isLoading: false
+      isLoading: false,
+      expanded: false
     }
   },
 
@@ -111,6 +117,13 @@ export default {
 
 .column-selector {
   margin-top: 10px;
+
+  .title {
+    margin-bottom: 0;
+  }
+  .fields {
+    margin-top: 15px;
+  }
 
   .multiselect {
     .multiselect__tags {
