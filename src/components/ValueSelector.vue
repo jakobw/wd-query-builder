@@ -73,7 +73,7 @@ import AnyMatchingValue from '../queryBuilder/AnyMatchingValue'
 const itemSearch = new ItemSearch(api)
 
 export default {
-  props: ['disabled', 'initial', 'statementPath'],
+  props: ['disabled', 'initial', 'objectId'],
 
   created() {
     if (this.initial) {
@@ -149,7 +149,7 @@ export default {
       if (value === specialValues.ANY_MATCHING) {
         // TODO: use a factory for all special values
         // TODO: value selector should not need to know statement path; statement should handle special values?
-        value = new AnyMatchingValue(this.statementPath)
+        value = new AnyMatchingValue(this.objectId)
       }
 
       this.selectValue(value)

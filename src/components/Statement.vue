@@ -9,7 +9,7 @@
     <div class="column">
       <ValueSelector v-on:select="selectValue"
                      :disabled="valueSelectorDisabled"
-                     :statementPath="statement.getId()"
+                     :objectId="statement.getId()"
                      :initial="valueLabel"
                      ref="value">
       </ValueSelector>

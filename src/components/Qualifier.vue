@@ -10,6 +10,7 @@
         <ValueSelector v-on:select="selectValue"
                        :disabled="valueSelectorDisabled"
                        :initial="valueLabel"
+                       :objectId="qualifier.getId()"
                        ref="value">
         </ValueSelector>
       </div>
