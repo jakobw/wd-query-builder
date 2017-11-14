@@ -1,8 +1,10 @@
 <template>
 <div class="builder-box query-options">
   <h5 class="title is-5">
-    <a @click="expanded = !expanded">[{{ expanded ? '-' : '+' }}]</a>
-    Query Options
+    <a @click="expanded = !expanded">
+      <i class="fa" :class="{ 'fa-caret-right': !expanded, 'fa-caret-down': expanded }"></i>
+      Query Options
+    </a>
   </h5>
 
   <div class="columns" v-show="expanded">
@@ -43,14 +45,21 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../style/main";
+
 .query-options {
   .title {
     margin-bottom: 0;
+
+    a {
+      color: $title-color;
+    }
   }
+
   .columns {
     margin-top: 0px;
   }
 
-  margin-top: 20px
+  margin-top: 10px
 }
 </style>
