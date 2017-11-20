@@ -48,7 +48,7 @@ export default {
 @import "../style/main";
 
 .query-options {
-  .title {
+  .title.is-5 {
     margin-bottom: 0;
 
     a {

@@ -70,7 +70,9 @@ export default {
 </script>
 
 <style lang="scss">
-.add-button {
-  margin-top: 10px
+@import "../style/main.scss";
+
+.add-button.button {
+  color: $blue;
 }
 </style>

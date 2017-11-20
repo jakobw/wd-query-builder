@@ -1,42 +1,46 @@
 <template>
-<div class="statement builder-box">
-  <div class="columns">
-    <div class="column">
-      <PropertySelector v-on:select="selectProperty"
-                        :initial="propertyLabel">
-      </PropertySelector>
+<div class="statement-wrapper">
+  <div class="statement builder-box">
+    <div class="columns">
+      <div class="column">
+        <PropertySelector v-on:select="selectProperty"
+                          :initial="propertyLabel">
+        </PropertySelector>
+      </div>
+      <div class="column">
+        <ValueSelector v-on:select="selectValue"
+                       :disabled="valueSelectorDisabled"
+                       :objectId="statement.getId()"
+                       :initial="valueLabel"
+                       ref="value">
+        </ValueSelector>
+      </div>
+      <div class="column is-narrow">
+        <a class="button" @click="$emit('remove')">&times;</a>
+      </div>
     </div>
-    <div class="column">
-      <ValueSelector v-on:select="selectValue"
-                     :disabled="valueSelectorDisabled"
-                     :objectId="statement.getId()"
-                     :initial="valueLabel"
-                     ref="value">
-      </ValueSelector>
+
+    <div class="columns" v-if="hasItemFilter()">
+      <div class="column is-offset-1 is-11">
+        <StatementList :subject="statement.getId()"></StatementList>
+      </div>
     </div>
-    <div class="column is-narrow">
-      <a class="button" @click="$emit('remove')">&times;</a>
+
+    <div class="qualifiers" v-if="Object.keys(qualifiers).length > 0">
+      <h5 class="title is-5">Qualifier filters for this statement</h5>
+
+      <Qualifier v-for="qualifier in qualifiers"
+                 :key="qualifier.getId()"
+                 :qualifier="qualifier"
+                 :subject="statement.getId()"
+                 v-on:remove="removeQualifier(qualifier)">
+      </Qualifier>
     </div>
   </div>
 
-  <div class="columns" v-if="hasItemFilter()">
-    <div class="column is-offset-1 is-11">
-      <StatementList :subject="statement.getId()"></StatementList>
-    </div>
+  <div class="add-qualifier">
+    <a class="button is-small" @click="addQualifier">+ add qualifier filter</a>
   </div>
-
-  <div class="qualifiers" v-if="Object.keys(qualifiers).length > 0">
-    <h5 class="title is-5">Qualifiers</h5>
-
-    <Qualifier v-for="qualifier in qualifiers"
-               :key="qualifier.getId()"
-               :qualifier="qualifier"
-               :subject="statement.getId()"
-               v-on:remove="removeQualifier(qualifier)">
-    </Qualifier>
-  </div>
-
-  <a class="add-qualifier button is-small" @click="addQualifier">+ add qualifier filter</a>
 </div>
 </template>
 
@@ -146,9 +150,32 @@ export default {
   }
 
   margin-top: 20px;
+  &.builder-box {
+    padding: 15px 10px;
+  }
+}
 
+.qualifiers {
+  .title.is-5 {
+    font-size: 1em;
+    margin-bottom: 5px;
+  }
+}
+
+.statement-wrapper:last-child {
   .add-qualifier {
-    margin-top: 10px;
+    margin-bottom: 0;
+  }
+}
+
+.add-qualifier {
+  text-align: right;
+  margin: -1px 0 10px 0;
+  padding-right: 0.75em;
+
+  .button {
+    border-top: 0;
+    color: $blue;
   }
 }
 </style>

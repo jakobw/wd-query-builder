@@ -101,4 +101,11 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../style/main.scss";
+
+.qualifier {
+  .button, .input {
+    @extend .is-small;
+  }
+}
 </style>
