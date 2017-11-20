@@ -2,7 +2,7 @@
 <section class="section">
   <div class="container header">
     <h1 class="title is-1">Wikidata Query Builder</h1>
-    <p class="subtitle is-4">Find items by describing their statements</p>
+    <p class="subtitle is-4">Create lists of items by filtering them based on their statements</p>
   </div>
 
   <div class="container">
