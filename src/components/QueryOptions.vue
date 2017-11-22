@@ -17,7 +17,7 @@
         <label class="label">Order by</label>
         <div class="control">
           <div class="select">
-            <select>
+            <select disabled>
               <option>label</option>
             </select>
           </div>
