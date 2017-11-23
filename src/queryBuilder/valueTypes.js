@@ -1,6 +1,11 @@
 import AnyMatchingValue from './AnyMatchingValue'
 
 export default {
+  SPECIFIC: {
+    label: 'Specific item',
+    description: 'Pick an item from an item selector',
+    id: 'X0'
+  },
   ANY_MATCHING: {
     label: 'any item matching...',
     description: 'The value should be any item that matches the statements below',

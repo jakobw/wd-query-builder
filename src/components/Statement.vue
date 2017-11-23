@@ -11,7 +11,7 @@
         <ValueSelector v-on:select="selectValue"
                        :disabled="valueSelectorDisabled"
                        :objectId="statement.getId()"
-                       :initial="valueLabel"
+                       :initial="statement.getValue()"
                        ref="value">
         </ValueSelector>
       </div>
@@ -50,7 +50,7 @@ import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
 import QualifierComponent from './Qualifier.vue'
 import Qualifier from '../queryBuilder/Qualifier'
-import specialValues from '../queryBuilder/specialValues'
+import valueTypes from '../queryBuilder/valueTypes'
 
 export default {
   props: ['statement', 'subject'],
@@ -108,18 +108,13 @@ export default {
 
     hasItemFilter() {
       const value = this.statement.getValue()
-      return value && value.getId() === specialValues.ANY_MATCHING.id
+      return value && value.getId() === valueTypes.ANY_MATCHING.id
     },
   },
 
   computed: {
     qualifiers() {
       return this.$store.state.qualifierTriples[this.statement.getId()] || {}
-    },
-
-    valueLabel() {
-      const value = this.statement.getValue()
-      return value && value.getLabel() || ''
     },
 
     propertyLabel() {

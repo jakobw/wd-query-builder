@@ -1,4 +1,4 @@
-import specialValues from './specialValues'
+import valueTypes from './valueTypes'
 import ItemValue from './ItemValue'
 
 export default class SpecialValueFactory {
@@ -13,6 +13,6 @@ export default class SpecialValueFactory {
   }
 
   static specialValueFromId(id) {
-    return Object.values(specialValues).find(value => value.id === id)
+    return Object.values(valueTypes).find(value => value.id === id)
   }
 }

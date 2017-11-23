@@ -9,7 +9,7 @@
       <div class="column">
         <ValueSelector v-on:select="selectValue"
                        :disabled="valueSelectorDisabled"
-                       :initial="valueLabel"
+                       :initial="qualifier.getValue()"
                        :objectId="qualifier.getId()"
                        ref="value">
         </ValueSelector>
@@ -32,7 +32,7 @@ import Vue from 'vue'
 
 import PropertySelector from './PropertySelector.vue'
 import ValueSelector from './ValueSelector.vue'
-import specialValues from '../queryBuilder/specialValues'
+import valueTypes from '../queryBuilder/valueTypes'
 
 export default {
   props: ['qualifier', 'subject'],
@@ -72,7 +72,7 @@ export default {
 
     hasItemFilter() {
       const value = this.qualifier.getValue()
-      return value && value.getId() === specialValues.ANY_MATCHING.id
+      return value && value.getId() === valueTypes.ANY_MATCHING.id
     },
   },
 
@@ -80,11 +80,6 @@ export default {
     propertyLabel() {
       const property = this.qualifier.getProperty()
       return property && property.getLabel() || ''
-    },
-
-    valueLabel() {
-      const value = this.qualifier.getValue()
-      return value && value.getLabel() || ''
     }
   },
 

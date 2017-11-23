@@ -1,4 +1,4 @@
-import specialValues from './specialValues'
+import valueTypes from './valueTypes'
 
 export default class AnyMatchingValue {
   constructor(object) {
@@ -10,18 +10,18 @@ export default class AnyMatchingValue {
   }
 
   getLabel() {
-    return specialValues.ANY_MATCHING.label
+    return valueTypes.ANY_MATCHING.label
   }
 
   getId() {
-    return specialValues.ANY_MATCHING.id
+    return valueTypes.ANY_MATCHING.id
   }
 
   toJSON() {
     return {
       object: this.object,
       id: this.getId(),
-      label: specialValues.ANY_MATCHING.label
+      label: valueTypes.ANY_MATCHING.label
     }
   }
 }

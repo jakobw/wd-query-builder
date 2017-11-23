@@ -3,7 +3,10 @@
   <div class="control">
     <a class="button is-static" :disabled="!visible">Value</a>
   </div>
-  <div class="control is-expanded has-icons-right">
+  <div class="control type-select" :class="{ 'is-expanded': !isSpecificItem }">
+    <ValueTypeDropdown :valueType.sync="valueType" :visible="visible"></ValueTypeDropdown>
+  </div>
+  <div class="control is-expanded has-icons-right" v-show="isSpecificItem">
     <div class="dropdown entity-selector">
       <input class="input dropdown-trigger"
              v-model="query"
@@ -25,33 +28,17 @@
            @mouseenter="hovering = true">
         <div class="dropdown-content">
           <i class="dropdown-item" v-if="!query">
-            Start typing to search for specific items...
+            Start typing to search for items...
           </i>
           <i class="dropdown-item" v-if="searching">
             Searching for items...
           </i>
-          <i class="dropdown-item" v-else-if="!results.length && !filteredSpecialValues.length">
-            No items found. Try searching for a different keyword.
-          </i>
 
-          <a class="dropdown-item"
-             v-for="(value, index) in filteredSpecialValues"
-             @mouseover="dropdownSelect(index)"
-             @click="selectSpecialValue(value)"
-             :class="{ 'is-active': index === selected }">
-             <p class="dropdown-item-label">
-               {{value.label}}
-             </p>
-             <p class="dropdown-item-description">
-               {{value.description}}
-             </p>
-          </a>
-          <hr class="dropdown-divider" v-show="results.length > 0 && filteredSpecialValues.length > 0">
           <a class="dropdown-item"
              v-for="(result, index) in results"
              @click="selectItem(result)"
-             @mouseover="dropdownSelect(filteredSpecialValues.length + index)"
-             :class="{ 'is-active': filteredSpecialValues.length + index === selected }">
+             @mouseover="dropdownSelect(index)"
+             :class="{ 'is-active': index === selected }">
              <p class="dropdown-item-label">{{result.label}}</p>
              <p class="dropdown-item-description">{{result.description}}</p>
            </a>
@@ -63,11 +50,14 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import debounce from 'lodash.debounce'
+import ValueTypeDropdown from './ValueTypeDropdown.vue'
 import { api } from '../api/newApi'
 import ItemSearch from '../api/ItemSearch'
 import ItemValue from '../queryBuilder/ItemValue'
-import specialValues from '../queryBuilder/specialValues'
+import valueTypes from '../queryBuilder/valueTypes'
+import ValueFactory from '../queryBuilder/ValueFactory'
 import AnyMatchingValue from '../queryBuilder/AnyMatchingValue'
 
 const itemSearch = new ItemSearch(api)
@@ -77,19 +67,25 @@ export default {
 
   created() {
     if (this.initial) {
-      this.query = this.initial
+      if (this.initial instanceof ItemValue) { // TODO: do this in a smarter way
+        this.valueType = valueTypes.SPECIFIC
+        this.query = this.initial.getLabel()
+      } else {
+        this.valueType = Object.values(valueTypes).find(type => type.id === this.initial.getId())
+      }
+
       this.isValidInput = true
     }
   },
 
   data() {
     return {
-      specialValues: Object.values(specialValues),
       results: [],
       hasFocus: false,
       hovering: false,
       searching: false,
       isValidInput: false,
+      valueType: valueTypes.SPECIFIC,
       query: '',
       selected: -1
     }
@@ -99,6 +95,17 @@ export default {
     query: function(term) {
       this.searching = true
       this.getItems(term)
+    },
+
+    valueType: function(type) {
+      if (type === valueTypes.SPECIFIC) {
+        this.selectValue(new ItemValue({label: ''})) // Note: to reset value for parent
+        this.isValidInput = false
+        Vue.nextTick(() => this.$el.querySelector('input').focus())
+      } else {
+        type.object = this.objectId
+        this.selectValue(ValueFactory.newValue(type))
+      }
     }
   },
 
@@ -128,7 +135,7 @@ export default {
     dropdownDown(event) {
       event.preventDefault()
       this.dropdownSelect(Math.min(
-        this.filteredSpecialValues.length + this.results.length - 1,
+        this.results.length - 1,
         this.selected + 1
       ))
     },
@@ -138,21 +145,7 @@ export default {
     },
 
     dropdownConfirm() {
-      if (this.selected < this.filteredSpecialValues.length) {
-        this.selectSpecialValue(this.filteredSpecialValues[this.selected])
-      } else {
-        this.selectItem(this.results[this.selected - this.filteredSpecialValues.length])
-      }
-    },
-
-    selectSpecialValue(value) {
-      if (value === specialValues.ANY_MATCHING) {
-        // TODO: use a factory for all special values
-        // TODO: value selector should not need to know statement path; statement should handle special values?
-        value = new AnyMatchingValue(this.objectId)
-      }
-
-      this.selectValue(value)
+      this.selectItem(this.results[this.selected])
     },
 
     selectItem(item) {
@@ -175,13 +168,17 @@ export default {
   },
 
   computed: {
-    filteredSpecialValues: function () {
-      return this.specialValues.filter(value => value.label.includes(this.query))
+    isSpecificItem: function() {
+      return this.valueType === valueTypes.SPECIFIC
     },
 
     visible() {
       return !this.disabled || this.initial
     }
+  },
+
+  components: {
+    ValueTypeDropdown
   }
 }
 </script>
@@ -189,5 +186,19 @@ export default {
 <style lang="scss">
 .dropdown-item-label {
   font-weight: bold;
+}
+.type-select {
+  &.is-expanded {
+    width: 100%;
+  }
+
+  .select {
+    width: 100%;
+    select {
+      width: 100%;
+    }
+  }
+
+  width: 30%;
 }
 </style>
