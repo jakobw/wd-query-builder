@@ -4,7 +4,7 @@
     <div class="columns">
       <div class="column">
         <PropertySelector v-on:select="selectProperty"
-                          :initial="propertyLabel"
+                          :initial="statement.getProperty()"
                           ref="property">
         </PropertySelector>
       </div>
@@ -118,11 +118,6 @@ export default {
   computed: {
     qualifiers() {
       return this.$store.state.qualifierTriples[this.statement.getId()] || {}
-    },
-
-    propertyLabel() {
-      const property = this.statement.getProperty()
-      return property && property.getLabel() || ''
     }
   },
 

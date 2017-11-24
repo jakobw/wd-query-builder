@@ -74,7 +74,7 @@ export default {
       hovering: false,
       searching: false,
       isValidInput: this.initial,
-      query: this.initial,
+      query: '',
       selectedProperty: null
     }
   },
@@ -83,6 +83,14 @@ export default {
     query: function(term) {
       this.searching = true
       this.getProperties(term)
+    }
+  },
+
+  created() {
+    if (this.initial) {
+      this.selectedProperty = this.initial
+      this.query = this.selectedProperty.getLabel()
+      this.isSpecialPropertyActive = !this.selectedProperty.getId().match(/^P\d+$/) // TODO: this is silly
     }
   },
 
