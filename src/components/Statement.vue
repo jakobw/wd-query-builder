@@ -4,7 +4,8 @@
     <div class="columns">
       <div class="column">
         <PropertySelector v-on:select="selectProperty"
-                          :initial="propertyLabel">
+                          :initial="propertyLabel"
+                          ref="property">
         </PropertySelector>
       </div>
       <div class="column">
@@ -65,7 +66,9 @@ export default {
   methods: {
     selectProperty(property) {
       this.valueSelectorDisabled = false
-      Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus())
+      if (document.activeElement === this.$refs.property.$el.querySelector('.input')) {
+        Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus())
+      }
 
       this.$store.commit({
         type: 'setStatementProperty',
