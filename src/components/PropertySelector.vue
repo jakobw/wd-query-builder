@@ -44,10 +44,11 @@
       </div>
     </div>
   </div>
-  <div class="notification special-property" v-if="this.selectedProperty && this.selectedProperty.getId() === 'P31'">
+  <div class="notification special-property" v-if="specialProperty">
     <label class="label">
-      <input type="checkbox" checked>
-      <strong>include subclasses</strong> (e.g. include instances of "painting" when filtering for instance of "work of art")
+      <input type="checkbox" v-model="isSpecialPropertyActive" @change="updateProperty">
+      <strong>{{specialProperty.description}}</strong>
+      {{specialProperty.longDescription}}
     </label>
   </div>
 </div>
@@ -82,14 +83,6 @@ export default {
     query: function(term) {
       this.searching = true
       this.getProperties(term)
-    },
-
-    results: function(results) {
-      const hasInstanceOf = results.some((result) => result.id === 'P31')
-      const hasInstanceOfSubclass = results.some((result) => result === specialProperties.INSTANCE_OF_ANY_SUBCLASS)
-      if (hasInstanceOf && !hasInstanceOfSubclass) {
-        this.results.unshift(specialProperties.INSTANCE_OF_ANY_SUBCLASS)
-      }
     }
   },
 
@@ -116,7 +109,10 @@ export default {
       this.query = entity.label
       this.isValidInput = true
       this.selectedProperty = new Property(entity)
-      this.$emit('select', this.selectedProperty)
+      if (this.specialProperty) {
+        this.isSpecialPropertyActive = true // on by default
+      }
+      this.updateProperty()
     },
 
     dropdownUp(event) {
@@ -138,6 +134,24 @@ export default {
 
     dropdownConfirm() {
       this.select(this.results[this.selected])
+    },
+
+    updateProperty() {
+      this.$emit('select', new Property({
+        label: this.selectedProperty.getLabel(),
+        id: this.isSpecialPropertyActive ? this.specialProperty.specialId : this.selectedProperty.getId()
+      }))
+    }
+  },
+
+  computed: {
+    specialProperty() {
+      if (!this.selectedProperty) return null
+
+      const selectedId = this.selectedProperty.getId()
+      return specialProperties.find(
+        p => selectedId === p.triggerId || selectedId === p.specialId
+      )
     }
   },
 

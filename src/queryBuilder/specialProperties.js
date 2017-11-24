@@ -1,7 +1,8 @@
-export default {
-  INSTANCE_OF_ANY_SUBCLASS: {
-    label: 'instance of any subclass of',
-    description: 'Subject is instance of or instance of a subclass of the value',
-    id: 'P31/wdt:P279*' // TODO: this is ugly but works?
+export default [
+  {
+    description: 'include subclasses',
+    longDescription: '(e.g. include instances of "painting" when filtering for instance of "work of art")',
+    triggerId: 'P31',
+    specialId: 'P31/wdt:P279*'
   }
-}
+]

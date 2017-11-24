@@ -57,7 +57,6 @@ import MultiSelect from 'vue-multiselect'
 import { api } from '../api/newApi'
 import PropertySearch from '../api/PropertySearch'
 import Property from '../queryBuilder/Property'
-import specialProperties from '../queryBuilder/specialProperties'
 
 const propertySearch = new PropertySearch(api)
 
