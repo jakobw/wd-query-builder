@@ -1,46 +1,54 @@
 <template>
-<div class="field has-addons">
-  <div class="control">
-    <a class="button is-static">Property</a>
-  </div>
-  <div class="control is-expanded has-icons-right">
-    <div class="dropdown entity-selector">
-      <input class="input"
-             v-model="query"
-             @focus="hasFocus = true"
-             @blur="hasFocus = false"
-             @keydown="isValidInput = false"
-             @keydown.enter="dropdownConfirm"
-             @keydown.up="dropdownUp($event)"
-             @keydown.down="dropdownDown($event)">
+<div class="property-selector">
+  <div class="field has-addons">
+    <div class="control">
+      <a class="button is-static">Property</a>
+    </div>
+    <div class="control is-expanded has-icons-right">
+      <div class="dropdown entity-selector">
+        <input class="input"
+               v-model="query"
+               @focus="hasFocus = true"
+               @blur="hasFocus = false"
+               @keydown="isValidInput = false"
+               @keydown.enter="dropdownConfirm"
+               @keydown.up="dropdownUp($event)"
+               @keydown.down="dropdownDown($event)">
 
-      <span class="icon is-right" v-if="!hasFocus">
-       <i class="fa" :class="{ 'fa-check': isValidInput, 'fa-warning': !isValidInput }"></i>
-      </span>
+        <span class="icon is-right" v-if="!hasFocus">
+         <i class="fa" :class="{ 'fa-check': isValidInput, 'fa-warning': !isValidInput }"></i>
+        </span>
 
-      <div class="dropdown-menu results"
-           v-show="hovering || hasFocus && query"
-           @mouseleave="hovering = false"
-           @mouseenter="hovering = true">
-        <div class="dropdown-content">
-          <i class="dropdown-item" v-if="searching">
-            Searching for properties...
-          </i>
-          <i class="dropdown-item" v-else-if="results.length === 0">
-            No properties found. Try searching for a different keyword.
-          </i>
+        <div class="dropdown-menu results"
+             v-show="hovering || hasFocus && query"
+             @mouseleave="hovering = false"
+             @mouseenter="hovering = true">
+          <div class="dropdown-content">
+            <i class="dropdown-item" v-if="searching">
+              Searching for properties...
+            </i>
+            <i class="dropdown-item" v-else-if="results.length === 0">
+              No properties found. Try searching for a different keyword.
+            </i>
 
-          <a class="dropdown-item"
-             v-for="(result, index) in results"
-             @click="select(result)"
-             @mouseover="dropdownSelect(index)"
-             :class="{ 'is-active': index === selected }">
-             <p class="dropdown-item-label">{{result.label}}</p>
-             <p class="dropdown-item-description">{{result.description}}</p>
-           </a>
+            <a class="dropdown-item"
+               v-for="(result, index) in results"
+               @click="select(result)"
+               @mouseover="dropdownSelect(index)"
+               :class="{ 'is-active': index === selected }">
+               <p class="dropdown-item-label">{{result.label}}</p>
+               <p class="dropdown-item-description">{{result.description}}</p>
+             </a>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="notification special-property" v-if="this.selectedProperty && this.selectedProperty.getId() === 'P31'">
+    <label class="label">
+      <input type="checkbox" checked>
+      <strong>include subclasses</strong> (e.g. include instances of "painting" when filtering for instance of "work of art")
+    </label>
   </div>
 </div>
 </template>
@@ -65,7 +73,8 @@ export default {
       hovering: false,
       searching: false,
       isValidInput: this.initial,
-      query: this.initial
+      query: this.initial,
+      selectedProperty: null
     }
   },
 
@@ -106,7 +115,8 @@ export default {
       this.hovering = false
       this.query = entity.label
       this.isValidInput = true
-      this.$emit('select', new Property(entity))
+      this.selectedProperty = new Property(entity)
+      this.$emit('select', this.selectedProperty)
     },
 
     dropdownUp(event) {
@@ -139,6 +149,18 @@ export default {
 
 <style lang="scss">
 @import '../style/main';
+
+.notification.special-property {
+  background-color: $light-blue;
+  padding: 5px 10px;
+  border-top: 0;
+  margin-top: -11px;
+
+  .label {
+    color: $dark-blue;
+    font-weight: normal;
+  }
+}
 
 .entity-selector {
     width: 100%;

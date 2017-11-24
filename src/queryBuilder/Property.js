@@ -23,6 +23,10 @@ export default class Property {
     return `pq:${this.property.id}`
   }
 
+  getId() {
+    return this.property.id
+  }
+
   toJSON() {
     return {
       id: this.property.id,
