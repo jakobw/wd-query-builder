@@ -29,11 +29,13 @@ export default {
     if (this.statements.length === 0) {
       this.addStatement()
     }
+
+    this.nextStatementNumber = this.getNextStatementNumber()
   },
 
   data() {
     return {
-      nextId: 0
+      nextStatementNumber: null // intialized in created()
     }
   },
 
@@ -42,9 +44,9 @@ export default {
       this.$store.commit({
         type: 'addStatement',
         subject: this.subject,
-        statement: new Statement(this.subject + '_s_' + this.nextId)
+        statement: new Statement(this.subject + '_s_' + this.nextStatementNumber)
       })
-      this.nextId++
+      this.nextStatementNumber++
     },
 
     removeStatement(statement) {
@@ -53,6 +55,18 @@ export default {
         subject: this.subject,
         statement
       })
+    },
+
+    /**
+     * This is needed when statements are imported from the URL
+     */
+    getNextStatementNumber() {
+      const statementIds = Object.keys(this.statements)
+
+      if (statementIds.length === 0) return 0
+
+      const idNums = statementIds.map(id => parseInt(id.match(/\d+$/)[0]))
+      return Math.max(...idNums) + 1
     }
   },
 

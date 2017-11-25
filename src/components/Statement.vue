@@ -59,8 +59,12 @@ export default {
   data() {
     return {
       valueSelectorDisabled: true,
-      nextQualifierId: 0
+      nextQualifierNumber: null // intialized in created()
     }
+  },
+
+  created() {
+    this.nextQualifierNumber = this.getNextQualifierNumber()
   },
 
   methods: {
@@ -96,9 +100,9 @@ export default {
       this.$store.commit({
         type: 'addQualifier',
         subject: this.statement.getId(),
-        qualifier: new Qualifier(this.subject + '_q_' + this.nextQualifierId)
+        qualifier: new Qualifier(this.subject + '_q_' + this.nextQualifierNumber)
       })
-      this.nextQualifierId++
+      this.nextQualifierNumber++
     },
 
     removeQualifier(qualifier) {
@@ -113,6 +117,18 @@ export default {
       const value = this.statement.getValue()
       return value && value.getId() === valueTypes.ANY_MATCHING.id
     },
+
+    /**
+     * This is needed when qualifiers are imported from the URL
+     */
+    getNextQualifierNumber() {
+      const qualifierIds = Object.keys(this.qualifiers)
+
+      if (qualifierIds.length === 0) return 0
+
+      const idNums = qualifierIds.map(id => parseInt(id.match(/\d+$/)[0]))
+      return Math.max(...idNums) + 1
+    }
   },
 
   computed: {
