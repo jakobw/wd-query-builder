@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="column">
         <PropertySelector v-on:select="selectProperty"
-                          :initial="propertyLabel">
+                          :initial="qualifier.getProperty()">
         </PropertySelector>
       </div>
       <div class="column">
@@ -74,13 +74,6 @@ export default {
       const value = this.qualifier.getValue()
       return value && value.getId() === valueTypes.ANY_MATCHING.id
     },
-  },
-
-  computed: {
-    propertyLabel() {
-      const property = this.qualifier.getProperty()
-      return property && property.getLabel() || ''
-    }
   },
 
   beforeCreate() {
