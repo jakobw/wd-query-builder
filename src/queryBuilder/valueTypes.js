@@ -9,7 +9,7 @@ export default {
   },
   ANY_MATCHING: {
     label: 'any item matching...',
-    description: 'The value should be any item that matches the statements below',
+    description: 'Specify possible values with statement filters',
     id: 'X1',
     classConstructor: AnyMatchingValue
   },
@@ -20,7 +20,7 @@ export default {
     classConstructor: AnyValue
   },
   DOES_NOT_EXIST: {
-    label: 'statement does not exist',
+    label: 'does not exist',
     description: 'A statement for this property does not exist on the item we are looking for',
     id: 'X3'
   }

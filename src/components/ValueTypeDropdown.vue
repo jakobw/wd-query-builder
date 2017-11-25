@@ -11,7 +11,8 @@
   <div class="dropdown-menu">
     <div class="dropdown-content">
       <a v-for="vtype in valueTypes" class="dropdown-item" :class="{'is-active': vtype === valueType}" @click="select(vtype)">
-        {{vtype.label}}
+        <p class="dropdown-item-label">{{vtype.label}}</p>
+        <p class="dropdown-item-description">{{vtype.description}}</p>
       </a>
     </div>
   </div>
