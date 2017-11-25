@@ -1,4 +1,5 @@
 import AnyMatchingValue from './AnyMatchingValue'
+import AnyValue from './AnyValue'
 
 export default {
   SPECIFIC: {
@@ -13,9 +14,10 @@ export default {
     classConstructor: AnyMatchingValue
   },
   ANY: {
-    label: 'any item',
-    description: 'It does not matter which item as long as there is a statement for this property',
-    id: 'X2'
+    label: 'any',
+    description: 'The value does not matter as long as there is a statement for this property',
+    id: 'X2',
+    classConstructor: AnyValue
   },
   DOES_NOT_EXIST: {
     label: 'statement does not exist',
