@@ -26,11 +26,11 @@ export default {
   props: ['subject'],
 
   created() {
+    this.nextStatementNumber = this.getNextStatementNumber()
+
     if (this.statements.length === 0) {
       this.addStatement()
     }
-
-    this.nextStatementNumber = this.getNextStatementNumber()
   },
 
   data() {
