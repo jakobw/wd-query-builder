@@ -70,7 +70,7 @@ export default {
   methods: {
     selectProperty(property) {
       this.valueSelectorDisabled = false
-      if (document.activeElement === this.$refs.property.$el.querySelector('.input')) {
+      if (document.activeElement !== this.$refs.property.$el.querySelector('input[type=checkbox]')) {
         Vue.nextTick(() => this.$refs.value.$el.querySelector('input').focus())
       }
 
