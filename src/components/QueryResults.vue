@@ -2,8 +2,19 @@
   <div class="results">
     <div class="buttons columns">
       <div class="column">
-        <button class="button is-primary" @click="showResults">Show Results</button>
-        <button class="button is-primary" @click="showQuery">Show Query</button>
+        <button class="button is-medium is-primary" @click="showResults">Show Results</button>
+        <button class="button is-medium" @click="showQuery">Show Query</button>
+      </div>
+
+      <div class="modal" :class="{ 'is-active': showQueryActive }">
+        <div class="modal-background" @click="showQueryActive = false"></div>
+        <div class="modal-content">
+          <div class="box">
+            <h5 class="title is-5">Here is the SPARQL query you built!</h5>
+            <input class="input" v-model="query">
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" @click="showQueryActive = false"></button>
       </div>
 
       <div class="column is-narrow">
@@ -29,6 +40,7 @@ export default {
   data() {
     return {
       query: '',
+      showQueryActive: false,
       resultsVisible: false
     }
   },
@@ -43,7 +55,9 @@ export default {
     },
 
     showQuery() {
-      console.log(this.generateQuery())
+      this.query = this.generateQuery()
+      this.showQueryActive = true
+      Vue.nextTick(() => this.$el.querySelector('input').select())
     },
 
     showResults() {
