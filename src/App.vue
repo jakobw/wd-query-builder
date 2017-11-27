@@ -2,7 +2,10 @@
 <section class="section">
   <div class="container header">
     <h1 class="title is-1">Wikidata Query Builder</h1>
-    <p class="subtitle is-4">Create lists of items by filtering them based on their statements</p>
+    <p class="subtitle is-4">
+      Create lists of items by filtering them based on their statements
+      <Examples></Examples>
+    </p>
   </div>
 
   <div class="container">
@@ -25,6 +28,7 @@
 require('font-awesome-sass-loader');
 
 import { store } from './store'
+import Examples from './components/Examples.vue'
 import StatementList from './components/StatementList.vue'
 import QueryOptions from './components/QueryOptions.vue'
 import QueryResults from './components/QueryResults.vue'
@@ -54,6 +58,7 @@ export default {
   },
 
   components: {
+    Examples,
     StatementList,
     QueryOptions,
     QueryResults
