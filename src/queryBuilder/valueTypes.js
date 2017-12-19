@@ -21,7 +21,7 @@ export default {
   },
   DOES_NOT_EXIST: {
     label: 'does not exist',
-    description: 'A statement for this property does not exist on the item we are looking for',
+    description: 'A statement for this property must not exist',
     id: 'X3'
   }
 }

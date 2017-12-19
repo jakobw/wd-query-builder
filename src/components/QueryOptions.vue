@@ -3,7 +3,7 @@
   <h5 class="title is-5">
     <a @click="expanded = !expanded">
       <i class="fa" :class="{ 'fa-caret-right': !expanded, 'fa-caret-down': expanded }"></i>
-      Query Options
+      List options
     </a>
   </h5>
 
