@@ -11,4 +11,10 @@ export default [
     triggerId: 'P279',
     specialId: 'P279|wdt:P279*'
   },
+  {
+    description: 'include subclasses of occupations',
+    longDescription: '(e.g. include people with occupation "football player", "marathon runner", "archer" when looking for occupation "sportsperson")',
+    triggerId: 'P106',
+    specialId: 'P106/wdt:P279*'
+  },
 ]
