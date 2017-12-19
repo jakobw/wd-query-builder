@@ -23,6 +23,7 @@ body {
 
 .builder-box {
   padding: 10px;
-  border: 1px solid darken($light, 10%);
+  border: 1px solid $grey-lighter;
   background: $white;
+  border-radius: 3px;
 }
