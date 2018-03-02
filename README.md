@@ -1,6 +1,7 @@
 # Wikidata Query Builder
 
-This repository contains the code for the Wikidata Query Builder prototype - a web application for generating lists of items from Wikidata by using statement filters.
+## Demo
+You can find a demo version on https://tools.wmflabs.org/wd-query-builder/.
 
 ## Build Setup
 
