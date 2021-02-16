@@ -1,3 +1,5 @@
+**DISCLAIMER**: Please note that this is a prototype from 2017 that is not actively maintained anymore. If you are looking for the repository of the more recent [Simple Query Builder](https://query-builder-test.toolforge.org/), you can find it [here](https://github.com/wmde/query-builder).
+
 # Wikidata Query Builder
 
 ## Demo
